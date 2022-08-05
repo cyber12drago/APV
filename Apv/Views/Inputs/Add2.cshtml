@@ -321,6 +321,18 @@
             for (var i = 0; i <= countawal; i++) {
                 OutputAttch(i);
             }
+            $.ajax({
+                url: "@Url.Action("GetLastNomor", "Inputs")",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    $('#NomorReg').val(parseInt(result.NomorReg) + 1);
+                    $('#NomorCN').val(parseInt(result.NomorCN) + 1);
+                    $('#NomorCNPPN').val(parseInt(result.NomorCNPPN) + 1);
+                    $('#NomorPP').val(parseInt(result.NomorPP) + 1);
+                }
+            })
         });
 
         function plustitik(angka) {

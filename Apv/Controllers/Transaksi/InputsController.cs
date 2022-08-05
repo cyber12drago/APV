@@ -1068,6 +1068,17 @@ namespace Apv.Controllers.Transaksi
             result.SettingSlips = _context.SettingSlip.Include(x => x.JenisSlip).Where(x => x.OutputSlipId == 1).OrderBy(x => x.JenisSlipId).ToList();
             return result;
         }
+
+        public JsonResult GetLastMemo()
+        {
+            var result = _context.Trans.OrderByDescending(x => x.Id).FirstOrDefault().Nomor;
+             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetLastNomor()
+        {
+            var result = _context.Trans.Where(x=> x.NomorReg != null && x.NomorCN !=null && x.NomorCNPPN != null && x.NomorPP != null).OrderByDescending(x => x.Id).FirstOrDefault();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult SaveSlip(TransSlip Slip, int TransId)
         {
             var result = false;
