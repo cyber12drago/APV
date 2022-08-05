@@ -404,7 +404,7 @@
             dataType: "json",
             success: function (result) {
                 console.log(result);
-                $('#NomorMemo').val(result+1);
+                $('#NomorMemo').val(parseInt(result) + 1);
                 }
             })
             
