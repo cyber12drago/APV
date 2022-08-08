@@ -587,16 +587,16 @@
             JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
 
             $('#NilaiPengadaan').val(decimal(TotPengadaan));
-            $('#PajakPertambahan').val(Math.round(TotPPN));
-            $('#InclusivePPN').val(Math.round(TotPengadaanPPN));
+            $('#PajakPertambahan').val(decimal(Math.round(TotPPN)));
+            $('#InclusivePPN').val(decimal(Math.round(TotPengadaanPPN)));
             //$('#InclusivePPNMaterai').val(decimal(TotPengadaanPPNMat));
-            $('#PajakPenghasilan').val(Math.round(TotPPH));
-            $('#InclusivePPH').val(Math.round(TotPengadaanPPH));
-            $('#BrutoPembayaran').val(Math.round(TotPengadaanPPH));
-            $('#PPNPembayaran').val(Math.round(TotPPN));
-            $('#JumlahPembayaran').val(Math.round(JumlahPembayaran));
-            $('#NominalKredit0').val(Math.round(JumlahPembayaran));
-            $('#NominalKredit3').val(Math.round(Denda));
+            $('#PajakPenghasilan').val(decimal(Math.round(TotPPH)));
+            $('#InclusivePPH').val(decimal(Math.round(TotPengadaanPPH)));
+            $('#BrutoPembayaran').val(decimal(Math.round(TotPengadaanPPH)));
+            $('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
+            $('#JumlahPembayaran').val(decimal(Math.round(JumlahPembayaran)));
+            $('#NominalKredit0').val(decimal(Math.round(JumlahPembayaran)));
+            $('#NominalKredit3').val(decimal(Math.round(Denda)));
 
             $('.Debit').each(function (i, value) {
                 var nilai = $(this).val();
@@ -685,7 +685,7 @@
                 PPN = 0;
             }
 
-            $('#TotalPPN' + Id).val(Math.round(PPN));
+            $('#TotalPPN' + Id).val(decimal(Math.round(PPN)));
             //$('#TotalPPN' + Id).val(decimal(PPN.toFixed(5)));
             if (Id == 0) {
                 Kredit('PPN', 1);
@@ -706,7 +706,7 @@
                 PPH = 0;
             }
 
-            $('#TotalPPH' + Id).val(Math.round(PPH));
+            $('#TotalPPH' + Id).val(decimal(Math.round(PPH)));
             //$('#TotalPPH' + Id).val(decimal(PPH.toFixed(5)));
             if (Id == 0) {
                 Kredit('PPH', 2);
