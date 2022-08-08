@@ -352,7 +352,48 @@ namespace Apv.Controllers.Transaksi
                         _context.SaveChanges();
                         #endregion
                     }
-                    
+
+                    var finish = _context.TransPotongan.SingleOrDefault(x => x.TransId == Id);
+                    finish.IsDone = true;
+                    _context.Entry(finish).State = EntityState.Modified;
+                    _context.SaveChanges();
+
+                    List<int> JenisPotonganId = new List<int> { 3, 4 };
+                    var cek = _context.TransPotongan.Where(x => x.TransId == finish.TransId && JenisPotonganId.Contains(x.SubJenisPotongan.JenisPotonganId) && x.IsDone == false).Count();
+                    if (cek == 0)
+                    {
+                        var OldTracks = _context.TransTracking.Where(x => x.TransId == finish.TransId).OrderByDescending(x => x.Id).FirstOrDefault();
+                        if (OldTracks.ReceiverId == User.Id)
+                        {
+                            #region Edit Tracking Before to Add Sender
+                            OldTracks.SendDate = DateTime.Now;
+                            OldTracks.SenderId = User.Id;
+                            _context.Entry(OldTracks).State = EntityState.Modified;
+                            _context.SaveChanges();
+                            #endregion
+
+                            #region Add New Tracking for receiver
+                            TransTracking NewTracks = new TransTracking();
+                            NewTracks.TransId = finish.TransId;
+                            NewTracks.ReceiveDate = DateTime.Now;
+                            NewTracks.ReceiverId = User.Id;
+                            NewTracks.ReceiverActivity = "finish the tax payment";
+                            NewTracks.ReceiverIcon = "check-circle";
+                            NewTracks.ReceiverColorIcon = "aqua";
+                            _context.TransTracking.Add(NewTracks);
+                            _context.SaveChanges();
+                            #endregion
+
+                            #region Edit Trans
+                            var trans = _context.Trans.SingleOrDefault(x => x.Id == finish.TransId);
+
+                            trans.StatusId = 6;
+                            _context.Entry(trans).State = EntityState.Modified;
+                            _context.SaveChanges();
+                            #endregion
+                        }
+                    }
+
                     result = true;
                 }
             }
