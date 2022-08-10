@@ -5,6 +5,8 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -1748,6 +1750,73 @@ namespace Apv.Controllers.Transaksi
             //System.Diagnostics.Process.Start(pathfile);
 
             #endregion
+        }
+
+        public void DownloadExcel(int Id)
+
+        {
+            var transaksi = _context.TransMainDetail.Where(x => x.TransId == Id).FirstOrDefault();
+            var ListSlip = _context.TransSlip.Where(x => x.TransId == Id).ToList(); 
+
+            //var ListSlips = _context.TransMainDetail.Where(x => x.TransId == Id).OrderBy(x => x.Id).Select(x => x.Trans.tr);
+            //var JenisSlip = ListSlips.Include(x => x.JenisSlip).FirstOrDefault().JenisSlip;
+            //var Trans = _context.Trans.Include(x => x.Kelompok).FirstOrDefault(x => x.Id == Id);
+            //var NoBatch = Trans.NoBatch.ToString() + Trans.CreateDate.ToString("ddMMyy");
+            //var Inputer = _context.TransTracking.Include(x => x.Receiver).Where(x => x.TransId == Id).OrderBy(x => x.Id).FirstOrDefault().Receiver;
+            //var ListSlip = ListSlips.Include(x => x.JenisRekeningDebit).Include(x => x.JenisRekeningKredit).Include(x => x.BankKredit).ToList();
+
+            ExcelPackage excel = new ExcelPackage();
+
+            var worksheet = excel.Workbook.Worksheets.Add("sheet1");
+           
+            #region Pinbuk
+            using (var rangeheader = worksheet.Cells[1, 1, 1, 8])
+            {
+                //rangeheader.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                //rangeheader.Style.Font.Size = 14;
+                //rangeheader.Style.Font.Bold = true;
+                //rangeheader.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
+                //rangeheader.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Azure);
+                rangeheader.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                rangeheader.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                //rangeheader.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                rangeheader.AutoFitColumns();
+            }
+            worksheet.Cells[1, 1].Value = "NOPEG";
+            worksheet.Cells[1, 2].Value = "NAMAPEG";
+            worksheet.Cells[1, 3].Value = "NOREKDB";
+            worksheet.Cells[1, 4].Value = "NOREKKD";
+            worksheet.Cells[1, 5].Value = "JMLGAJI";
+            worksheet.Cells[1, 6].Value = "KETERANGAN1";
+            worksheet.Cells[1, 7].Value = "KETERANGAN2";
+            worksheet.Cells[1, 8].Value = "KETERANGAN3";
+            var recordIndex = 2;
+            var I = 1;
+            foreach (var a in ListSlip)
+            {
+                worksheet.Cells[recordIndex, 1].Value = (I).ToString();
+                worksheet.Cells[recordIndex, 2].Value = a.NamaRekDebit;
+                worksheet.Cells[recordIndex, 3].Value = a.NoRekDebit;
+                worksheet.Cells[recordIndex, 4].Value = a.NoRekKredit;
+                worksheet.Cells[recordIndex, 5].Value = a.NominalDebit;
+                worksheet.Cells[recordIndex, 6].Value = a.Keterangan1;
+                worksheet.Cells[recordIndex, 7].Value = a.Keterangan2;
+                worksheet.Cells[recordIndex, 8].Value = a.Keterangan3;
+                recordIndex++;
+                I++;
+            }
+            #endregion
+            
+            
+            using (var memoryStream = new MemoryStream())
+            {
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment; filename="+"tesslip.xls");
+                excel.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                Response.End();
+            }
         }
     }
 }
