@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Rotativa;
 
 namespace Apv.Controllers.Transaksi
 {
@@ -36,6 +37,7 @@ namespace Apv.Controllers.Transaksi
         // GET: Histories
         public ActionResult Index()
         {
+
             FilterList result = new FilterList();
             result.ListKodeSurat = _context.KodeSurat.ToList();
             result.ListStatus = _context.Status.Where(x => x.Id >= 2).ToList();

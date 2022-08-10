@@ -3,20 +3,18 @@ using Apv.Models.Transaksi;
 using Apv.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Dapper;
 using System.Data.SqlClient;
 using System.Configuration;
-using Apv.Models.Master;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using RazorPDF;
 
 namespace Apv.Controllers.Transaksi
 {
@@ -43,6 +41,47 @@ namespace Apv.Controllers.Transaksi
             //var a = _con.Query<Status>("SELECT * FROM Status WHERE Id = @Id", new { Id = c }).ToList();
             return View();
         }
+
+        //------------------------------------------------------------------------------------------------------------------------
+        //Halaman tambahan untuk membuat pdf
+        //-------------------------------------------------------------------------------------------------------------------------
+
+        //public FileStreamResult Print(int id)
+        //{
+        //    var model = _CustomRepository.Get(id);
+        //    this.ConvertToPDF = true;
+        //    return View("HtmlView");
+        //}
+
+        //public override OnResultExecuting(ResultExecutingContext context)
+        //{
+        //    if (this.ConvertToPDF)
+        //    {
+        //        this.PDFStream = new MemoryStream();
+        //        context.HttpContext.Response.Filter = new PDFStreamFilter(this.PDFStream);
+        //    }
+        //}
+
+        //public override OnResultExecuted(ResultExecutedContext context)
+        //{
+        //    if (this.ConvertToPDF)
+        //    {
+        //        context.HttpContext.Response.Clear();
+        //        this.PDFStream.Seek(0, SeekOrigin.Begin);
+        //        Stream byteStream = _PrintService.PrintToPDF(this.PDFStream);
+        //        StreamReader reader = new StreamReader(byteStream);
+        //        context.HttpContext.Response.AddHeader("content-disposition",
+        //               "attachment; filename=report.pdf");
+        //        context.HttpContext.Response.AddHeader("content-type",
+        //               "application/pdf");
+        //        context.HttpContext.Response.Write(reader.ReadToEnd());
+        //    }
+        //}
+
+        //------------------------------------------------------------------------------------------------------------------------
+        //Halaman tambahan untuk membuat pdf
+        //-------------------------------------------------------------------------------------------------------------------------
+
         public JsonResult GetList()
         {
             var User = GetUser();
@@ -319,7 +358,7 @@ namespace Apv.Controllers.Transaksi
                         }
                     }
 
-                    MemoPDF(Id, pathfile);
+                    
 
                     #endregion
 
@@ -353,47 +392,55 @@ namespace Apv.Controllers.Transaksi
                         #endregion
                     }
 
-                    var finish = _context.TransPotongan.SingleOrDefault(x => x.TransId == Id);
-                    finish.IsDone = true;
-                    _context.Entry(finish).State = EntityState.Modified;
+                    var finish = _context.TransPotongan.Where(x => x.TransId == Id).ToList();
+                    foreach (var item in finish)
+                    {
+                        item.IsDone = true;
+                        _context.Entry(item).State = EntityState.Modified;
+                    }
                     _context.SaveChanges();
 
                     List<int> JenisPotonganId = new List<int> { 3, 4 };
-                    var cek = _context.TransPotongan.Where(x => x.TransId == finish.TransId && JenisPotonganId.Contains(x.SubJenisPotongan.JenisPotonganId) && x.IsDone == false).Count();
-                    if (cek == 0)
+
+                    foreach (var item in finish)
                     {
-                        var OldTracks = _context.TransTracking.Where(x => x.TransId == finish.TransId).OrderByDescending(x => x.Id).FirstOrDefault();
-                        if (OldTracks.ReceiverId == User.Id)
+                        var cek = _context.TransPotongan.Where(x => x.TransId == item.TransId && JenisPotonganId.Contains(x.SubJenisPotongan.JenisPotonganId) && x.IsDone == false).Count();
+                        if (cek == 0)
                         {
-                            #region Edit Tracking Before to Add Sender
-                            OldTracks.SendDate = DateTime.Now;
-                            OldTracks.SenderId = User.Id;
-                            _context.Entry(OldTracks).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            #endregion
+                            var OldTracks = _context.TransTracking.Where(x => x.TransId == item.TransId).OrderByDescending(x => x.Id).FirstOrDefault();
+                            if (OldTracks.ReceiverId == User.Id)
+                            {
+                                #region Edit Tracking Before to Add Sender
+                                OldTracks.SendDate = DateTime.Now;
+                                OldTracks.SenderId = User.Id;
+                                _context.Entry(OldTracks).State = EntityState.Modified;
+                                _context.SaveChanges();
+                                #endregion
 
-                            #region Add New Tracking for receiver
-                            TransTracking NewTracks = new TransTracking();
-                            NewTracks.TransId = finish.TransId;
-                            NewTracks.ReceiveDate = DateTime.Now;
-                            NewTracks.ReceiverId = User.Id;
-                            NewTracks.ReceiverActivity = "finish the tax payment";
-                            NewTracks.ReceiverIcon = "check-circle";
-                            NewTracks.ReceiverColorIcon = "aqua";
-                            _context.TransTracking.Add(NewTracks);
-                            _context.SaveChanges();
-                            #endregion
+                                #region Add New Tracking for receiver
+                                TransTracking NewTracks = new TransTracking();
+                                NewTracks.TransId = item.TransId;
+                                NewTracks.ReceiveDate = DateTime.Now;
+                                NewTracks.ReceiverId = User.Id;
+                                NewTracks.ReceiverActivity = "finish the tax payment";
+                                NewTracks.ReceiverIcon = "check-circle";
+                                NewTracks.ReceiverColorIcon = "aqua";
+                                _context.TransTracking.Add(NewTracks);
+                                _context.SaveChanges();
+                                #endregion
 
-                            #region Edit Trans
-                            var trans = _context.Trans.SingleOrDefault(x => x.Id == finish.TransId);
+                                #region Edit Trans
+                                var trans = _context.Trans.SingleOrDefault(x => x.Id == item.TransId);
 
-                            trans.StatusId = 6;
-                            _context.Entry(trans).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            #endregion
+                                trans.StatusId = 6;
+                                _context.Entry(trans).State = EntityState.Modified;
+                                _context.SaveChanges();
+                                #endregion
+                            }
                         }
                     }
 
+                    MemoPDF(Id, pathfile);
                     result = true;
                 }
             }

@@ -568,3 +568,4 @@ C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.falseTransAttch.resourc
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.csproj.GenerateResource.Cache
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.pdb
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\RazorPDF.dll

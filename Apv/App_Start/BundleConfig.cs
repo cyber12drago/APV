@@ -55,7 +55,8 @@ namespace Apv
             //bundles.Add(new StyleBundle("~/Content/css").Include(
             //          "~/Content/bootstrap.css",
             //          "~/Content/site.css"));
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(                        
                       "~/Content/AdminLTE/bower/bootstrap/css/bootstrap.min.css",
                       "~/Content/AdminLTE/bower/font-awesome/css/font-awesome.min.css",
                       "~/Content/AdminLTE/bower/Ionicons/css/ionicons.min.css",
@@ -73,7 +74,8 @@ namespace Apv
                       "~/Content/sweetalert/sweetalert.css",
                       "~/Content/GantChart/jquery.ganttView.css",
                       "~/Content/ModalLoading.css",
-                      "~/Content/ProgressNavbar.css"
+                      "~/Content/ProgressNavbar.css",
+                      "~/Content/PrintAcc.css"
                       ));
         }
     }

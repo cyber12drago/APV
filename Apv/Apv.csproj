@@ -78,6 +78,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="RazorPDF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -210,6 +214,7 @@
     <Compile Include="Controllers\Transaksi\ContractsController.cs" />
     <Compile Include="Controllers\Transaksi\HistoriesController.cs" />
     <Compile Include="Controllers\Transaksi\InputsController.cs" />
+    <Compile Include="Controllers\Transaksi\PdfAccController.cs" />
     <Compile Include="Controllers\Transaksi\ReportsController.cs" />
     <Compile Include="Controllers\Transaksi\TaxesController.cs" />
     <Compile Include="Controllers\Transaksi\VerificationsController.cs" />
@@ -500,11 +505,16 @@
     <Content Include="Content\Login\responsive.css" />
     <Content Include="Content\Login\style.css" />
     <Content Include="Content\ModalLoading.css" />
+    <Content Include="Content\PrintAcc.css" />
     <Content Include="Content\sweetalert\sweetalert.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\AdminLTE\bower\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\AdminLTE\bower\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\AdminLTE\bower\bootstrap-daterangepicker\daterangepicker.js" />
@@ -638,6 +648,7 @@
     <Content Include="Content\AdminLTE\bower\Ionicons\fonts\ionicons.woff" />
     <Content Include="Content\AdminLTE\dist\css\adminlte.css.map" />
     <Content Include="Content\AdminLTE\dist\css\adminlte.min.css.map" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Properties\PublishProfiles\Apv.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -735,6 +746,8 @@
     <Content Include="Views\Inputs\Add3.cshtml" />
     <Content Include="Views\Inputs\AddSlip.cshtml" />
     <Content Include="Views\Inputs\EditSlip.cshtml" />
+    <Content Include="Views\Verifications\PdfAcc.cshtml" />
+    <Content Include="Views\Verifications\AccTransaksi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -742,6 +755,7 @@
     <Folder Include="Files\KontrakAddSPK\" />
     <Folder Include="Files\Rekening Debit\" />
     <Folder Include="Files\Tax\" />
+    <Folder Include="Views\PdfAcc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
