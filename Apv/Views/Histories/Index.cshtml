@@ -241,10 +241,17 @@
                     },
                     {
                         "render": function (data, type, val) {
+                            console.log(val);
                             html = '';
                             html += '<a href="@Url.Action("View", "Histories")/' + val.Id + '" class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="View"><i class="fa fa-eye"></i></a>';
                             html += ' <button class="btn btn-sm btn-default" onclick="HistoryModal(' + val.Id + ')" data-placement="bottom" title="History"><i class="fa fa-history"></i></button>';
                             html += ' <a href="@Url.Action("DownloadPdf", "Histories")/' + val.Id + '" class="btn btn-sm btn-social-icon btn-foursquare" data-toggle="tooltip" data-placement="bottom" title="PDF"><i class="fa fa-file-pdf-o"></i></a>';
+                            if (val.Status.Id == 5) {
+                                html += ' <a href="@Url.Action("DownloadExcel", "Histories")/' + val.Id + '" class="btn btn-sm btn-social-icon btn-success" data-toggle="tooltip" data-placement="bottom" title="Excel"><i class="fa fa-file-excel-o"></i></a>';
+                            }
+                            else {
+                                html += ' <a class="btn btn-sm btn-social-icon btn-success" disabled readonly data-placement="bottom" title="Excel"><i class="fa fa-file-excel-o"></i></a>';
+                            }
                             if (val.IsTakeBack) {
                                 html += ' <button class="btn btn-sm btn-danger" onclick="TakeBackModal(' + val.Id + ',\'' + val.KodeSurat.Nama + '' + val.Nomor + '\')" data-placement="bottom" title="Take Back"><i class="fa fa-mail-reply"></i></button>';
                             } else {
