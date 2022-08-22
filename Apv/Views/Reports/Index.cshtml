@@ -20,6 +20,7 @@
                             <option selected="selected" value="">-- Pilih Jenis Report --</option>
                             <option value="1">Rekap PPN</option>
                             <option value="2">Rekap PPH</option>
+                            <option value="3">Laporan Transaksi Harian</option>
                         </select>
                     </div>
                 </div>
@@ -94,8 +95,14 @@
                 $('#Download').attr('href', '@Url.Action("RekapPPH", "Reports")?StartDate=' + StartDate + '&&EndDate=' + EndDate);
                 $('#Download').removeAttr('disabled');
                 $('#Download').removeAttr('readonly');
-            } 
+            }
+            else if (Jenis == 3) {
+                $('#Download').attr('href', '@Url.Action("LaporanTransaksiHarian", "Reports")?StartDate=' + StartDate + '&&EndDate=' + EndDate);
+                $('#Download').removeAttr('disabled');
+                $('#Download').removeAttr('readonly');
+            }
         }
     </script>
 }
 
+a
