@@ -750,12 +750,20 @@
         }
 
         function HitungPPN(Id) {
-            var PPN = Math.round(parseFloat(minkoma($('#PersenPPN' + Id).val())) / 100 * parseFloat(minkoma($('#NilaiPPN' + Id).val())));
+            //debugger;
+            var gaji = parseFloat(minkoma($('#NilaiPPN' + Id).val()));
+            var persen = parseFloat($('#PersenPPN' + Id).val());
+            //var PPN = Math.round(parseFloat(minkoma($('#PersenPPN' + Id).val())) / 100 * parseFloat(minkoma($('#NilaiPPN' + Id).val())));
+            //console.log(typeof persen);
+            //console.log(persen)
+            var PPN = gaji * (+persen / 100);
+            //console.log(PPN);
+            //var PPN = Math.round((parseFloat(minkoma($('#NilaiPPN' + Id).val())) * parseFloat(minkoma($('#PersenPPN' + Id).val())))/100);
             if (isNaN(PPN)) {
                 PPN = 0;
             }
 
-            $('#TotalPPN' + Id).val(decimal(PPN));
+            $('#TotalPPN' + Id).val(decimal(Math.round(PPN)));
             //$('#TotalPPN' + Id).val(decimal(PPN.toFixed(5)));
             if (Id == 0) {
                 Kredit('PPN', 1);
@@ -764,12 +772,19 @@
         }
 
         function HitungPPH(Id) {
-            var PPH = Math.round(parseFloat(minkoma($('#PersenPPH' + Id).val())) / 100 * parseFloat(minkoma($('#NilaiPPH' + Id).val())));
+            var gaji = parseFloat(minkoma($('#NilaiPPH' + Id).val()));
+            var persen = $('#PersenPPH' + Id).val();
+            persen = parseFloat(persen.replace(",", "."));
+
+            var PPH = gaji * (persen / 100);
+
+            //var PPH = Math.round(parseFloat(minkoma($('#PersenPPH' + Id).val())) / 100 * parseFloat(($('#NilaiPPH' + Id).val())));
+            //var PPH = Math.round(parseFloat(minkoma($('#PersenPPH' + Id).val())) * 100% parseFloat(minkoma($('#NilaiPPH' + Id).val())));
             if (isNaN(PPH)) {
                 PPH = 0;
             }
 
-            $('#TotalPPH' + Id).val(decimal(PPH));
+            $('#TotalPPH' + Id).val(decimal(Math.round(PPH)));
             //$('#TotalPPH' + Id).val(decimal(PPH.toFixed(5)));
             if (Id == 0) {
                 Kredit('PPH', 2);

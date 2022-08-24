@@ -40,6 +40,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group col-md-12">
                             <label class="col-sm-2 control-label text-right">Nama Rekanan</label>
                             <div class="col-sm-4" id="divMainId">
@@ -72,9 +73,11 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="col-sm-2 control-label text-right">Uraian</label>
+                            @*<label class="col-sm-2 control-label text-right">Uraian</label>*@
+                            <label class="col-sm-2 control-label text-right">Jenis Pekerjaan</label>
                             <div class="col-sm-10" id="divUraian">
-                                <textarea class="form-control" rows="2" id="Uraian" placeholder="Uraian"></textarea>
+                                @*<textarea class="form-control" rows="2" id="Uraian" placeholder="Uraian"></textarea>*@
+                                <textarea class="form-control" rows="2" id="Uraian" placeholder="Jenis Pekerjaan"></textarea>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -110,19 +113,29 @@
                                         <option value="@data.Id" nilai="@data.Nilai" nama2="@data.Nama2" norek="@data.NoRek" norek2="@data.NoRek2">@data.Nama</option>
                                     }
                                 </select>
+                                @*<select required="required" class="form-control select2 input-sm" onchange="NilaiPPN2(0)" id="PPNB0" style="width: 100%;">
+                                    @foreach (var data in Model.PPN)
+                                    {
+                                        <option value="@data.Id" nilai="@data.Nilai" nama2="@data.Nama2" norek="@data.NoRek" norek2="@data.NoRek2">@data.Nama</option>
+                                    }
+                                </select>*@
                             </div>
                             <div class="col-sm-2" id="divPersenPPN0">
                                 <div class="input-group">
                                     <input type="text" class="form-control text-right input-sm" id="PersenPPN0" readonly disabled autocomplete="off" placeholder="Nominal">
                                     <span class="input-group-addon">%</span>
                                 </div>
+                                @*<div class="input-group">
+                                    <input type="text" class="form-control text-right input-sm" id="PersenPPNB0" readonly disabled autocomplete="off" placeholder="Nominal">
+                                    <span class="input-group-addon">%</span>
+                                </div>*@
                             </div>
                             <div class="col-sm-2" id="divNilaiPPN0">
                                 @*<input type="text" class="form-control text-right input-sm" id="NilaiPPN0" oninput="HitungPPN(0); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Pajak Pertambahan Nilai" readonly>*@
                                 <input type="text" class="form-control text-right input-sm" id="NilaiPPN0" oninput="HitungPPN(0); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Pajak Pertambahan Nilai">
                             </div>
                             <div class="col-sm-2" id="divTotalPPN0">
-                                <input type="text" class="form-control text-right input-sm PPN" id="TotalPPN0" oninput="Hitung(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Total Nominal PPN">                                
+                                <input type="text" class="form-control text-right input-sm PPN" id="TotalPPN0" oninput="Hitung(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Total Nominal PPN">
                             </div>
                             <div class="col-sm-1">
                                 <button class="btn btn-default btn-sm" onclick="AddPPN()"><i class="fa fa-plus-circle"></i></button>
@@ -161,12 +174,22 @@
                                         <option value="@data.Id" nilai="@data.Nilai" nama2="@data.Nama2" norek="@data.NoRek" norek2="@data.NoRek2">@data.Nama</option>
                                     }
                                 </select>
+                                @*<select required="required" class="form-control select2 input-sm" onchange="NilaiPPH1(0)" id="PPHB0" style="width: 100%;">
+                                    @foreach (var data in Model.PPH)
+                                    {
+                                        <option value="@data.Id" nilai="@data.Nilai" nama2="@data.Nama2" norek="@data.NoRek" norek2="@data.NoRek2">@data.Nama</option>
+                                    }
+                                </select>*@
                             </div>
                             <div class="col-sm-2" id="divPersenPPH0">
                                 <div class="input-group">
                                     <input type="text" class="form-control text-right input-sm" id="PersenPPH0" readonly disabled autocomplete="off" placeholder="Nominal">
                                     <span class="input-group-addon">%</span>
                                 </div>
+                                @*<div class="input-group">
+                                    <input type="text" class="form-control text-right input-sm" id="PersenPPHB0" readonly disabled autocomplete="off" placeholder="Nominal">
+                                    <span class="input-group-addon">%</span>
+                                </div>*@
                             </div>
                             <div class="col-sm-2" id="divNilaiPPH0">
                                 <input type="text" class="form-control text-right input-sm" id="NilaiPPH0" oninput="HitungPPH(0); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Pajak Penghasilan">
@@ -399,15 +422,15 @@
             NilaiPPN(0);
             NilaiPPH(0);
             $.ajax({
-            url: "@Url.Action("GetLastMemo", "Inputs")",
-            type: "GET",
-            dataType: "json",
-            success: function (result) {
-                console.log(result);
-                $('#NomorMemo').val(parseInt(result) + 1);
+                url: "@Url.Action("GetLastMemo", "Inputs")",
+                type: "GET",
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    $('#NomorMemo').val(parseInt(result) + 1);
                 }
             })
-            
+
 
         });
 
@@ -543,6 +566,9 @@
             var JumlahPembayaran = 0;
             var Debit = 0;
             var Kredit = 0;
+            var pengadaan = $('#NilaiPengadaan').val();
+            pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+           
             $('.Pengadaan').each(function (i, value) {
                 var nilai = $(this).val();
                 if (isNaN(minkoma(nilai)) || nilai == "") {
@@ -583,9 +609,9 @@
             if (isNaN(Denda) || Denda == "") {
                 Denda = 0;
             }
-
-            JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
-
+    
+            
+            
             $('#NilaiPengadaan').val(decimal(TotPengadaan));
             $('#PajakPertambahan').val(decimal(Math.round(TotPPN)));
             $('#InclusivePPN').val(decimal(Math.round(TotPengadaanPPN)));
@@ -593,7 +619,17 @@
             $('#PajakPenghasilan').val(decimal(Math.round(TotPPH)));
             $('#InclusivePPH').val(decimal(Math.round(TotPengadaanPPH)));
             $('#BrutoPembayaran').val(decimal(Math.round(TotPengadaanPPH)));
-            $('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
+        
+            if (parseInt(pengadaan) >= 10000000) {
+         
+                $('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
+
+            } else {
+                TotPPN = 0;
+                $('#PPNPembayaran').val(0);
+            }
+            JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
+            //$('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
             $('#JumlahPembayaran').val(decimal(Math.round(JumlahPembayaran)));
             $('#NominalKredit0').val(decimal(Math.round(JumlahPembayaran)));
             $('#NominalKredit3').val(decimal(Math.round(Denda)));
@@ -650,7 +686,7 @@
                 //}
                 var PPH = minkoma($('#NilaiPPH0').val());
                 //if (isNaN(PPH) || PPH == "") {
-                
+
                 $('#NilaiPPH0').val(decimal(Pengadaan));
                 HitungPPH(0);
                 //}
@@ -659,10 +695,17 @@
 
         function NilaiPPN(Id) {
             var Persen = $('#PPN' + Id).find('option:selected').attr('nilai');
-
+        
             $('#PersenPPN' + Id).val(Persen);
             HitungPPN(Id);
         }
+
+        //function NilaiPPN2(Id) {
+        //    var Persen = $('#PPNB' + Id).find('option:selected').attr('nilai');
+
+        //    $('#PersenPPNB' + Id).val(Persen);
+        //    HitungPPN(Id);
+        //}
 
         function NilaiPPH(Id) {
             var Persen = $('#PPH' + Id).find('option:selected').attr('nilai');
@@ -670,17 +713,35 @@
             $('#PersenPPH' + Id).val(Persen);
             HitungPPH(Id);
         }
+        //function NilaiPPH1(Id) {
+        //    var Persen = $('#PPHB' + Id).find('option:selected').attr('nilai');
 
+        //    $('#PersenPPHB' + Id).val(Persen);
+        //    HitungPPH(Id);
+        //}
         function HitungPPN(Id) {
             //debugger;
             var gaji = parseFloat(minkoma($('#NilaiPPN' + Id).val()));
-            var persen = parseFloat($('#PersenPPN' + Id).val());
+            var persen = parseFloat($('#PersenPPN' + Id).val().replace(",", "."));
+          
+            //var persen2 = parseFloat($('#PersenPPNB' + Id).val());
+
+
             //var PPN = Math.round(parseFloat(minkoma($('#PersenPPN' + Id).val())) / 100 * parseFloat(minkoma($('#NilaiPPN' + Id).val())));
             //console.log(typeof persen);
             //console.log(persen)
-            var PPN = gaji * (+persen / 100);
+            if (persen != 0) {
+                var PPN = gaji * (+persen / 100);
+            }
+            else {
+                var PPN = gaji
+            }
             //console.log(PPN);
             //var PPN = Math.round((parseFloat(minkoma($('#NilaiPPN' + Id).val())) * parseFloat(minkoma($('#PersenPPN' + Id).val())))/100);
+
+            //if (isNaN(persen2) == false && persen2 != 0) {
+            //    PPN = PPN * (+persen2 / 100);
+            //}
             if (isNaN(PPN)) {
                 PPN = 0;
             }
@@ -696,12 +757,22 @@
         function HitungPPH(Id) {
             var gaji = parseFloat(minkoma($('#NilaiPPH' + Id).val()));
             var persen = $('#PersenPPH' + Id).val();
+            //var persen2 = $('#PersenPPHB' + Id).val();
             persen = parseFloat(persen.replace(",", "."));
-           
-            var PPH = gaji * (persen / 100);
-            
+            //persen2 = parseFloat(persen2.replace(",", "."));
+
+            if (persen != 0) {
+                var PPH = gaji * (persen / 100);
+            } else {
+                PPH = gaji;
+            }
+
+
             //var PPH = Math.round(parseFloat(minkoma($('#PersenPPH' + Id).val())) / 100 * parseFloat(($('#NilaiPPH' + Id).val())));
             //var PPH = Math.round(parseFloat(minkoma($('#PersenPPH' + Id).val())) * 100% parseFloat(minkoma($('#NilaiPPH' + Id).val())));
+            //if (!isNaN(persen2) && persen2 != 0) {
+            //    PPH = PPH * (persen2 / 100);
+            //}
             if (isNaN(PPH)) {
                 PPH = 0;
             }
@@ -715,9 +786,10 @@
         }
 
         function Kredit(Pajak, Id) {
+            
             var Nama = $('#' + Pajak + '0').find('option:selected').attr('Nama2');
             var Norek = $('#' + Pajak + '0').find('option:selected').attr('Norek');
-
+           
             if ($("#Kredit" + Id).length) {
                 $("#Kredit" + Id).val(Nama);
             }
@@ -725,7 +797,15 @@
                 $("#NoRekKredit" + Id).val(Norek);
             }
             if ($("#NominalKredit" + Id).length) {
-                $("#NominalKredit" + Id).val($('#Total' + Pajak + '0').val());
+                var pengadaan = $('#NilaiPengadaan').val();
+                pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+                if (parseInt(pengadaan) <10000000 && Pajak=="PPN") {
+                    $("#NominalKredit" + Id).val(0);
+                }
+                else {
+                    $("#NominalKredit" + Id).val($('#Total' + Pajak + '0').val());
+                   
+                }
             }
         }
 
@@ -785,18 +865,25 @@
 
         function AddPPN() {
             var countawal = $('#GPPN0').attr('count');
+            var PPN = $('#GPPN0').data('id');
+       
             var count = parseInt(countawal) + 1;
             var html = '';
             html += '<div class="form-group col-md-12 GPPN" id="GPPN' + count + '">';
             html += '<label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>';
             html += '<div class="col-sm-2" id="divPPN' + count + '">';
             html += '<select required="required" class="form-control select2 input-sm" onchange="NilaiPPN(' + count + ')" id="PPN' + count + '" style="width: 100%;"></select>';
+            //html += '<select required="required" class="form-control select2 input-sm" onchange="NilaiPPN2(' + count + ')" id="PPNB' + count + '" style="width: 100%;"></select>';
             html += '</div>';
             html += '<div class="col-sm-2" id="divPersenPPN' + count + '">';
             html += '<div class="input-group">';
             html += '<input type="text" class="form-control text-right input-sm" id="PersenPPN' + count + '" readonly disabled autocomplete="off" placeholder="Nominal">';
             html += '<span class="input-group-addon">%</span>';
             html += '</div>';
+            //html += '<div class="input-group">';
+            //html += '<input type="text" class="form-control text-right input-sm" id="PersenPPNB' + count + '" readonly disabled autocomplete="off" placeholder="Nominal">';
+            //html += '<span class="input-group-addon">%</span>';
+            //html += '</div>';
             html += '</div>';
             html += '<div class="col-sm-2" id="divNilaiPPN' + count + '">';
             html += '<input type="text" class="form-control text-right input-sm" id="NilaiPPN' + count + '" oninput="HitungPPN(' + count + '); this.value = decimal(this.value.replace(/[^0-9.]/g, \'\').replace(/\\.(?=.*\\.)/g, \'\'));" autocomplete="off" placeholder="Nominal Pajak Pertambahan Nilai">';
@@ -813,6 +900,7 @@
             $('#GPPN0').attr('count', count);
 
             $('#PPN0').find('option').clone().appendTo('#PPN' + count);
+            //$('#PPNB0').find('option').clone().appendTo('#PPNB' + count);
             $('.select2').select2();
             NilaiPPN(count);
         }
@@ -825,12 +913,17 @@
             html += '<label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>';
             html += '<div class="col-sm-2" id="divPPH' + count + '">';
             html += '<select required="required" class="form-control select2 input-sm" onchange="NilaiPPH(' + count + ')" id="PPH' + count + '" style="width: 100%;"></select>';
+            //html += '<select required="required" class="form-control select2 input-sm" onchange="NilaiPPH1(' + count + ')" id="PPHB' + count + '" style="width: 100%;"></select>';
             html += '</div>';
             html += '<div class="col-sm-2" id="divPersenPPH' + count + '">';
             html += '<div class="input-group">';
             html += '<input type="text" class="form-control text-right input-sm" id="PersenPPH' + count + '" readonly disabled autocomplete="off" placeholder="Nominal">';
             html += '<span class="input-group-addon">%</span>';
             html += '</div>';
+            //html += '<div class="input-group">';
+            //html += '<input type="text" class="form-control text-right input-sm" id="PersenPPHB' + count + '" readonly disabled autocomplete="off" placeholder="Nominal">';
+            //html += '<span class="input-group-addon">%</span>';
+            //html += '</div>';
             html += '</div>';
             html += '<div class="col-sm-2" id="divNilaiPPH' + count + '">';
             html += '<input type="text" class="form-control text-right input-sm" id="NilaiPPH' + count + '" oninput="HitungPPH(' + count + '); this.value = decimal(this.value.replace(/[^0-9.]/g, \'\').replace(/\\.(?=.*\\.)/g, \'\'));" autocomplete="off" placeholder="Nominal Pajak Penghasilan">';
@@ -847,6 +940,7 @@
             $('#GPPH0').attr('count', count);
 
             $('#PPH0').find('option').clone().appendTo('#PPH' + count);
+            //$('#PPHB0').find('option').clone().appendTo('#PPHB' + count);
             $('.select2').select2();
             NilaiPPH(count);
         }
@@ -1063,7 +1157,7 @@
                 if (i != 3) {
                     if ($("#Kredit" + i).length) { if ($.trim($("#Kredit" + i).val()) == "") { $("#divKredit" + i).addClass("has-error"); eror = true; } }
                     if ($("#NoRekKredit" + i).length) { if ($.trim($("#NoRekKredit" + i).val()) == "") { $("#divNoRekKredit" + i).addClass("has-error"); eror = true; } }
-                    if ($("#NominalKredit" + i).length) { if ($.trim($("#NominalKredit" + i).val()) == "" || minkoma($("#NominalKredit" + i).val()) == 0) { $("#divNominalKredit" + i).addClass("has-error"); eror = true; } }
+                    if ($("#NominalKredit" + i).length) { if ($.trim($("#NominalKredit" + i).val()) == "") { $("#divNominalKredit" + i).addClass("has-error"); eror = true; } }
                 }
             }
             if (minkoma($("#TotalDebit").val()) != minkoma($("#TotalKredit").val())) { $("#divTotalDebit").addClass("has-error"); $("#divTotalKredit").addClass("has-error"); eror = true; }

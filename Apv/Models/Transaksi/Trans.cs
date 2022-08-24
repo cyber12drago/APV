@@ -25,5 +25,7 @@ namespace Apv.Models.Transaksi
         public string NomorCN { get; set; }
         public string NomorCNPPN { get; set; }
         public string NomorPP { get; set; }
+        public ApplicationUser Creater { get; set; }
+        public string CreaterId { get; set; }
     }
 }
