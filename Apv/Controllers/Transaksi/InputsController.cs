@@ -356,6 +356,7 @@ namespace Apv.Controllers.Transaksi
                 trans = TransVM.Trans;
                 trans.StatusId = 1;
                 trans.CreateDate = DateTime.Now;
+                trans.CreaterId = GetUser().Id;
                 trans.IsDelete = false;
                 _context.Trans.Add(trans);
                 _context.SaveChanges();
@@ -1068,7 +1069,6 @@ namespace Apv.Controllers.Transaksi
             result.SettingSlips = _context.SettingSlip.Include(x => x.JenisSlip).Where(x => x.OutputSlipId == 1).OrderBy(x => x.JenisSlipId).ToList();
             return result;
         }
-
         public JsonResult GetLastMemo()
         {
             var result = _context.Trans.OrderByDescending(x => x.Id).FirstOrDefault().Nomor;

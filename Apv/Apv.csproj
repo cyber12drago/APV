@@ -52,8 +52,16 @@
       <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EPPlus, Version=5.7.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\EPPlus.5.7.4\lib\net45\EPPlus.dll</HintPath>
+    <Reference Include="EPPlus, Version=6.0.6.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.6.0.6\lib\net35\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.6.0.0\lib\net452\EPPlus.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=6.0.0.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.6.0.0\lib\net452\EPPlus.System.Drawing.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
@@ -78,7 +86,41 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RazorPDF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.6.0\lib\net40\Rotativa.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=18.4451.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Compression.Base.18.4.0.34\lib\net451\Syncfusion.Compression.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=18.4451.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.DocIO.AspNet.18.4.0.34\lib\net451\Syncfusion.DocIO.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.DocToPdfConverter.Base, Version=18.4451.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.DocToPDFConverter.AspNet.18.4.0.34\lib\net451\Syncfusion.DocToPdfConverter.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=18.4451.0.34, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.18.4.0.34\lib\net451\Syncfusion.Licensing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=18.4451.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.OfficeChart.Base.18.4.0.34\lib\net451\Syncfusion.OfficeChart.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=18.4451.0.34, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Pdf.AspNet.18.4.0.34\lib\net451\Syncfusion.Pdf.Base.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
@@ -141,6 +183,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -210,6 +253,7 @@
     <Compile Include="Controllers\Transaksi\ContractsController.cs" />
     <Compile Include="Controllers\Transaksi\HistoriesController.cs" />
     <Compile Include="Controllers\Transaksi\InputsController.cs" />
+    <Compile Include="Controllers\Transaksi\PdfAccController.cs" />
     <Compile Include="Controllers\Transaksi\ReportsController.cs" />
     <Compile Include="Controllers\Transaksi\TaxesController.cs" />
     <Compile Include="Controllers\Transaksi\VerificationsController.cs" />
@@ -329,9 +373,9 @@
     <Compile Include="Migrations\202112230404361_addNoinTrans.Designer.cs">
       <DependentUpon>202112230404361_addNoinTrans.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202202150813537_falseTransAttch.cs" />
-    <Compile Include="Migrations\202202150813537_falseTransAttch.Designer.cs">
-      <DependentUpon>202202150813537_falseTransAttch.cs</DependentUpon>
+    <Compile Include="Migrations\202208180211449_CurrentUser.cs" />
+    <Compile Include="Migrations\202208180211449_CurrentUser.Designer.cs">
+      <DependentUpon>202208180211449_CurrentUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -500,11 +544,19 @@
     <Content Include="Content\Login\responsive.css" />
     <Content Include="Content\Login\style.css" />
     <Content Include="Content\ModalLoading.css" />
+    <Content Include="Content\PrintAcc.css" />
     <Content Include="Content\sweetalert\sweetalert.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="NuGet.exe" />
+    <Content Include="Rotativa\libeay32.dll" />
+    <Content Include="Rotativa\libgcc_s_dw2-1.dll" />
+    <Content Include="Rotativa\mingwm10.dll" />
+    <Content Include="Rotativa\README.txt" />
+    <Content Include="Rotativa\ssleay32.dll" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\AdminLTE\bower\bootstrap-datepicker\bootstrap-datepicker.js" />
     <Content Include="Scripts\AdminLTE\bower\bootstrap-datepicker\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\AdminLTE\bower\bootstrap-daterangepicker\daterangepicker.js" />
@@ -638,6 +690,8 @@
     <Content Include="Content\AdminLTE\bower\Ionicons\fonts\ionicons.woff" />
     <Content Include="Content\AdminLTE\dist\css\adminlte.css.map" />
     <Content Include="Content\AdminLTE\dist\css\adminlte.min.css.map" />
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Files\Template\Template.docx" />
     <None Include="Properties\PublishProfiles\Apv.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -735,6 +789,9 @@
     <Content Include="Views\Inputs\Add3.cshtml" />
     <Content Include="Views\Inputs\AddSlip.cshtml" />
     <Content Include="Views\Inputs\EditSlip.cshtml" />
+    <Content Include="Views\Verifications\PdfAcc.cshtml" />
+    <Content Include="Views\Verifications\AccTransaksi.cshtml" />
+    <Content Include="Views\Histories\Approvalceklist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -742,12 +799,15 @@
     <Folder Include="Files\KontrakAddSPK\" />
     <Folder Include="Files\Rekening Debit\" />
     <Folder Include="Files\Tax\" />
+    <Folder Include="Views\PdfAcc\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
@@ -836,8 +896,8 @@
     <EmbeddedResource Include="Migrations\202112230404361_addNoinTrans.resx">
       <DependentUpon>202112230404361_addNoinTrans.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202202150813537_falseTransAttch.resx">
-      <DependentUpon>202202150813537_falseTransAttch.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202208180211449_CurrentUser.resx">
+      <DependentUpon>202208180211449_CurrentUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
