@@ -314,7 +314,9 @@ namespace Apv.Controllers.Transaksi
                             });
 
                             //string path = Server.MapPath("Eva2/Eva/Files/Attch/" + item.Path);
-                            string path = ("C:/KERJAAN/BNI/EVA2/Eva/Files/Attch/"+ item.Path);
+                            //string path = ("C:/KERJAAN/BNI/EVA2/Eva/Files/Attch/"+ item.Path);
+                            string path = ("C:/Users/M Naufal/Documents/Kerja/EVA2/Eva/Files/Attch/" + item.Path);
+                            
                             //string path = Server.MapPath("/DevEva/Files/Attch/" + item.Path);
                         }
                     }
@@ -503,7 +505,7 @@ namespace Apv.Controllers.Transaksi
 
             #region Create PDF Document
             Document pdfDoc = new Document();
-            var pathfile1 = /*Server.MapPath("Eva2/Eva/Files/Attch/") + Path;*/ ("C:/KERJAAN/BNI/EVA2/Eva/Files/Attch/"+ Path);
+            var pathfile1 = /*Server.MapPath("Eva2/Eva/Files/Attch/") + Path;*/ ("C:/Users/M Naufal/Documents/Kerja/EVA2/Eva/Files/Attch/" + Path);
             //var pathfile1 = Server.MapPath("/EVA2/Eva/Files/Attch/") + Path; (hasil pdf keluar)
             //var pathfile1 = Server.MapPath("/DevEva/Files/Attch/") + Path;
 

@@ -70,7 +70,7 @@ namespace Apv.Controllers.Transaksi
             ws.Cells[1, 1, 2, 11].Style.Numberformat.Format = "@";
             ws.Cells[1, 1, 2, 11].Style.Font.Size = 14;
             ws.Cells[1, 1, 2, 11].Style.Font.Bold = true;
-            
+
             ws.Cells[1, 1, 2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Cells[1, 1, 2, 11].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             #endregion
@@ -433,6 +433,262 @@ namespace Apv.Controllers.Transaksi
 
             return ws;
         }
+
+        public ExcelWorksheet TransaksiHarian(ExcelPackage pck, DateTime StartDate, DateTime EndDate, string sheet)
+        {
+            #region Create Excel
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add(sheet);
+            ws.Cells.Style.Font.Size = 11; //Default font size for whole sheet
+            ws.Cells.Style.Font.Name = "Calibri"; //Default Font name for whole sheet
+            if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)   // Right to Left for Arabic lang
+            {
+                ExcelWorksheetView wv = ws.View;
+                wv.ZoomScale = 70;
+                wv.RightToLeft = true;
+                ws.PrinterSettings.Orientation = eOrientation.Landscape;
+                ws.Cells.AutoFitColumns();
+            }
+            else
+            {
+                ExcelWorksheetView wv = ws.View;
+                wv.ZoomScale = 70;
+                wv.RightToLeft = false;
+                ws.PrinterSettings.Orientation = eOrientation.Landscape;
+                ws.Cells.AutoFitColumns();
+            }
+            #endregion
+
+            #region Create Judul
+            ws.Cells[1, 1].Value = "Laporan " + sheet.ToUpper();
+            ws.Cells[2, 1].Value = StartDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")) + " - " + EndDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID"));
+
+            ws.Cells[1, 1, 1, 11].Merge = true;
+            ws.Cells[2, 1, 2, 11].Merge = true;
+            ws.Cells[1, 1, 2, 11].Style.Numberformat.Format = "@";
+            ws.Cells[1, 1, 2, 11].Style.Font.Size = 14;
+            ws.Cells[1, 1, 2, 11].Style.Font.Bold = true;
+
+            ws.Cells[1, 1, 2, 11].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells[1, 1, 2, 11].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            #endregion
+
+            #region Create Thead Tabel                
+            ws.Cells[4, 1].Value = "NO MEMO";
+            ws.Cells[4, 2].Value = "TGL TERIMA&JAM TERIMA";
+            ws.Cells[4, 3].Value = "NO REGISTER PYN";
+            ws.Cells[4, 4].Value = "TANGGAL MEMO";
+            ws.Cells[4, 5].Value = "NAMA REKANAN";
+            ws.Cells[4, 6].Value = "NOREK REKANAN";
+            ws.Cells[4, 7].Value = "JENIS PEKERJAAN";
+            ws.Cells[4, 8].Value = "NO & TGL KONTRAK";
+            ws.Cells[4, 9].Value = "ADDENDUM";
+            ws.Cells[4, 10].Value = "NO & TGL KWITANSI /INVOICE";
+            ws.Cells[4, 11].Value = "NOREK PEMBUKUAN";
+            ws.Cells[4, 12].Value = "NOMINAL PEMBUKUAN";
+            ws.Cells[4, 13].Value = "KREDIT KE VENDOR";
+            ws.Cells[4, 14].Value = "PPH PASAL 22";
+            ws.Cells[4, 15].Value = "PPH PASAL 23";
+            ws.Cells[4, 16].Value = "PPH PASAL 4(2)";
+            ws.Cells[4, 17].Value = "TRF PPH 4(2)";
+            ws.Cells[4, 18].Value = "PPH PSL 21";
+            ws.Cells[4, 19].Value = "PPN";
+            ws.Cells[4, 20].Value = "TGL /MASA PPN";
+            ws.Cells[4, 21].Value = "Giro Internal Phone Plus";
+            ws.Cells[4, 22].Value = "Pdptn Ganti Rugi Kterlambatan";
+            ws.Cells[4, 23].Value = "Pdptn Non Opr Lainnya";
+            ws.Cells[4, 24].Value = "Beban Lainnya";
+            ws.Cells[4, 25].Value = "BY";
+            #endregion
+
+
+
+
+            #region Style Thead
+            ws.Cells[4, 1, 4, 25].Style.Numberformat.Format = "@";
+            ws.Cells[4, 1, 4, 25].Style.Font.Size = 11;
+            ws.Cells[4, 1, 4, 25].Style.Font.Bold = true;
+            ws.Cells[4, 1, 4, 25].Style.Font.Color.SetColor(Color.White);
+            ws.Cells[4, 1, 4, 25].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells[4, 1, 4, 25].Style.Fill.BackgroundColor.SetColor(ColorTranslator.FromHtml("#000000"));
+            ws.Cells[4, 1, 4, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells[4, 1, 4, 25].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells[4, 1, 4, 25].Style.WrapText = true;
+
+            ws.Column(1).Width = 20;
+            ws.Column(2).Width = 20;
+            ws.Column(3).Width = 20;
+            ws.Column(4).Width = 20;
+            ws.Column(5).Width = 20;
+            ws.Column(6).Width = 20;
+            ws.Column(7).Width = 20;
+            ws.Column(8).Width = 20;
+            ws.Column(9).Width = 20;
+            ws.Column(10).Width = 20;
+            ws.Column(11).Width = 20;
+            ws.Column(12).Width = 20;
+            ws.Column(13).Width = 20;
+            ws.Column(14).Width = 20;
+            ws.Column(15).Width = 20;
+            ws.Column(16).Width = 20;
+            ws.Column(17).Width = 20;
+            ws.Column(18).Width = 20;
+            ws.Column(19).Width = 20;
+            ws.Column(20).Width = 20;
+            ws.Column(21).Width = 20;
+            ws.Column(22).Width = 20;
+            ws.Column(23).Width = 20;
+            ws.Column(24).Width = 20;
+            ws.Column(25).Width = 20;
+
+            #endregion
+
+            #region Create Content Tabel
+            var data = _context.Trans.Where(x => DbFunctions.TruncateTime(x.DocDate) >= DbFunctions.TruncateTime(StartDate) && DbFunctions.TruncateTime(x.DocDate) <= DbFunctions.TruncateTime(EndDate)).OrderBy(x => x.DocDate).ToList();
+            if (data.Count() > 0)
+            {
+                #region Data Tersedia
+                int tr = 1, no = 1, indx = 1;
+                decimal tarif = 0;
+
+                foreach (var item in data)
+                {
+
+                    ws.Cells[4 + tr, 1].Value = "PFA/7.4/" + item.Nomor;
+                    ws.Cells[4 + tr, 2].Value = item.CreateDate;
+                    ws.Cells[4 + tr, 3].Value = "PYN/760/082022/" + item.NomorReg;
+                    ws.Cells[4 + tr, 4].Value = item.DocDate;
+
+                    #region Get Vendor dan norek
+                    TransRekening rekening = _context.TransRekening.Where(x => x.TransId == item.Id && x.BankId != null).FirstOrDefault();
+
+                    #endregion
+
+                    ws.Cells[4 + tr, 5].Value = rekening.Nama;
+                    ws.Cells[4 + tr, 6].Value = rekening.NoRek;
+                    ws.Cells[4 + tr, 7].Value = item.Uraian;
+
+                    TransMainDetail transmain = _context.TransMainDetail.Where(x => x.TransId == item.Id).FirstOrDefault();
+                    MainDetail MainDetail = _context.MainDetail.Where(x => x.Id == transmain.MainDetailId).FirstOrDefault();
+
+                    ws.Cells[4 + tr, 8].Value = MainDetail.Nomor;
+                    ws.Cells[4 + tr, 9].Value = "";
+
+                    TransAttachment attachment = _context.TransAttachment.Where(x => x.TransId == item.Id && x.SubJenisAttchId == 3).FirstOrDefault();
+                    ws.Cells[4 + tr, 10].Value = attachment.Nomor;
+
+                    TransRekening rekening_buku = _context.TransRekening.Where(x => x.TransId == item.Id && x.IsDebit == true).FirstOrDefault();
+                    ws.Cells[4 + tr, 11].Value = rekening_buku.NoRek ;
+                    ws.Cells[4 + tr, 12].Value = rekening_buku.Nominal;
+
+                    var trans_vendor = _context.TransRekening.Where(x => x.TransId == item.Id && x.IsDebit == false).ToList();
+                    ws.Cells[4 + tr, 13].Value = trans_vendor[0].Nominal;
+                    ws.Cells[4 + tr, 14].Value = trans_vendor[0].Nominal;
+
+
+
+                    for(int i =1; i<=trans_vendor.Count()-1;i++)
+                    {
+                        if (trans_vendor[i].Nama.ToLower().Split()[0] == "pph")
+                        {
+
+                            if (trans_vendor[2].Nama.ToLower().Contains("pph pasal 22"))
+                            {
+                                ws.Cells[4 + tr, 15].Value = trans_vendor[0].Nominal;
+                            }
+                            else if (trans_vendor[2].Nama.ToLower().Contains("pph pasal 23"))
+                            {
+                                ws.Cells[4 + tr, 16].Value = trans_vendor[0].Nominal;
+                            }
+                            else if (trans_vendor[2].Nama.ToLower().Contains("pph pasal 4(2)"))
+                            {
+                                ws.Cells[4 + tr, 17].Value = trans_vendor[0].Nominal;
+                            }
+                            else if (trans_vendor[2].Nama.ToLower().Contains("trf pph 4(2)"))
+                            {
+                                ws.Cells[4 + tr, 18].Value = trans_vendor[0].Nominal;
+                            }
+                            else if (trans_vendor[2].Nama.ToLower().Contains("pph psl 21"))
+                            {
+                                ws.Cells[4 + tr, 19].Value = trans_vendor[0].Nominal;
+                            }
+                        }
+                    }
+                    ws.Cells[4 + tr, 20].Value = trans_vendor[1].Nominal;
+                    ws.Cells[4 + tr, 21].Value = ""; //tgl masa ppn kadang diisi kadang tidak?
+                    ws.Cells[4 + tr, 23].Value = ""; //Giro Internal Phone plus?
+                    ws.Cells[4 + tr, 24].Value = ""; //Giro Internal Phone plus?
+
+                    TransPotongan denda = _context.TransPotongan.Where(x => x.TransId == item.Id && x.SubJenisPotonganId == 2).FirstOrDefault();
+                    ws.Cells[4 + tr, 25].Value = denda.Nominal; //Giro Internal Phone plus?
+
+                    #region Style
+                    ws.Cells[4 + tr, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    ws.Cells[4 + tr, 2].Style.Numberformat.Format = "@";
+                    ws.Cells[4 + tr, 3].Style.Numberformat.Format = "dd/MM/yyyy";
+                    ws.Cells[4 + tr, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                    ws.Cells[4 + tr, 4, 4 + tr, 5].Style.Numberformat.Format = "@";
+                    ws.Cells[4 + tr, 6].Style.Numberformat.Format = "#0\\.00%";
+                    ws.Cells[4 + tr, 7, 4 + tr, 8].Style.Numberformat.Format = "_-* #,##0_-;-* #,##0_-;_-* \"-\"??_-;_-@_-";
+                    ws.Cells[4 + tr, 6, 4 + tr, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                    ws.Cells[4 + tr, 1, 4 + tr, 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    ws.Cells[4 + tr, 11].Style.WrapText = true;
+                    #endregion
+
+
+                    no++;
+                    tr++;
+                }
+
+                #region Sub Total
+                ws.Cells[4 + tr, 1].Value = "Sub Total";
+                ws.Cells[4 + tr, 7].Formula = "=SUM(" + ws.Cells[4 + indx, 7].Address + ":" + ws.Cells[4 + tr - 1, 7].Address + ")";
+                ws.Cells[4 + tr, 8].Formula = "=SUM(" + ws.Cells[4 + indx, 8].Address + ":" + ws.Cells[4 + tr - 1, 8].Address + ")";
+
+                #region Style
+                ws.Cells[4 + tr, 1, 4 + tr, 6].Merge = true;
+                ws.Cells[4 + tr, 1, 4 + tr, 6].Style.Numberformat.Format = "@";
+                ws.Cells[4 + tr, 1, 4 + tr, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells[4 + tr, 7, 4 + tr, 8].Style.Numberformat.Format = "_-* #,##0_-;-* #,##0_-;_-* \"-\"??_-;_-@_-";
+                ws.Cells[4 + tr, 7, 4 + tr, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+                ws.Cells[4 + tr, 1, 4 + tr, 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                #endregion                
+                #endregion
+
+                #endregion
+            }
+            else
+            {
+                #region Data Tidak Tersedia
+                ws.Cells[5, 1, 6, 9].Value = "DATA TIDAK TERSEDIA";
+                ws.Cells[5, 1, 6, 9].Merge = true;
+
+                ws.Cells[4, 1, 6, 9].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 6, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 6, 9].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 6, 9].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+
+                ws.Cells[4, 1, 6, 9].Style.Numberformat.Format = "@";
+                ws.Cells[4, 1, 6, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                ws.Cells[4, 1, 6, 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                #endregion
+            }
+
+            #endregion
+           
+
+            return ws;
+        }
+    
+
 
         public ExcelWorksheet KartuChecklist(ExcelPackage pck, int Id)
         {
@@ -860,6 +1116,27 @@ namespace Apv.Controllers.Transaksi
             //string path = Server.MapPath("~/Files/Rekening Debit/" + pathfile);
 
             //pck.SaveAs(new FileInfo(path));
+        }
+        public void LaporanTransaksiHarian(DateTime StartDate, DateTime EndDate)
+        {
+
+            ExcelPackage pck = new ExcelPackage();
+
+            //var sheets = "PPN Masukan WAPU";
+            var sheets = "Transaksi Harian";
+            ExcelWorksheet ws = TransaksiHarian(pck, StartDate, EndDate, sheets);
+            
+
+
+            HttpContext.Response.Clear();
+            HttpContext.Response.AddHeader("", "");
+            HttpContext.Response.Charset = System.Text.UTF8Encoding.UTF8.WebName;
+            HttpContext.Response.ContentEncoding = System.Text.UTF8Encoding.UTF8;
+            HttpContext.Response.AddHeader("content-disposition", "attachment;  filename=Laporan Transaksi Harian " + StartDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")) + " - " + EndDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")) + " .xlsx");
+            HttpContext.Response.ContentType = "application/text";
+            HttpContext.Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");
+            HttpContext.Response.BinaryWrite(pck.GetAsByteArray());
+            HttpContext.Response.End();
         }
 
         public void RekapKartuChecklist(int Id)
