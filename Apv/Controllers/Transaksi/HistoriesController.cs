@@ -17,6 +17,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Rotativa;
+using Syncfusion.DocIO.DLS;
+using Syncfusion.DocIO;
+using Syncfusion.DocToPDFConverter;
+using Syncfusion.Pdf;
 
 namespace Apv.Controllers.Transaksi
 {
@@ -24,6 +28,8 @@ namespace Apv.Controllers.Transaksi
     {
         ApplicationDbContext _context = new ApplicationDbContext();
         SqlConnection _con = new SqlConnection(ConfigurationManager.ConnectionStrings["Eva"].ToString());
+
+
         private ApplicationUser GetUser()
         {
             ApplicationUser result = new ApplicationUser();
@@ -41,8 +47,136 @@ namespace Apv.Controllers.Transaksi
             FilterList result = new FilterList();
             result.ListKodeSurat = _context.KodeSurat.ToList();
             result.ListStatus = _context.Status.Where(x => x.Id >= 2).ToList();
+            //var report = new ActionAsPdf("Index");
             return View(result);
         }
+
+        public ActionResult Approvalceklist(int Id)
+        {
+            AddVM result = new AddVM();
+            result.Id = Id;
+            result.PPN = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 3).ToList();
+            result.PPH = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 4).ToList();
+            result.Bank = _context.Bank.ToList();
+
+            return View(result);
+            //return View();
+        }
+
+        public void Template(int Id)
+        {
+            var data = _context.TransMainDetail.Include(x => x.MainDetail)
+                .Include(x => x.Trans).Include(x => x.MainDetail.Main).Include(x=>x.MainDetail.Main.Vendor)
+                .Where(x => x.TransId == Id).FirstOrDefault();
+            var data2 = _context.TransMainDetail.Include(x => x.MainDetail)
+                .Include(x => x.Trans).Include(x => x.MainDetail.Main).Include(x => x.MainDetail.Main.Vendor).Include(x=> x.Trans.Creater)
+                .Where(x => x.TransId == Id).ToList();
+            var MainDetail = _context.MainDetail.Include(x => x.Main.Vendor).Where(x => x.MainId == Id).ToList();
+            var TransRekeningKredit = _context.TransRekening.Include(x =>x.Trans).Where(x => x.TransId == Id && x.IsMain == false && x.IsDebit == false).ToList();
+            var MainDetailId = MainDetail.Select(x => x.Id).ToList();
+            var TransPotonganPPN = _context.TransPotongan.Include(x => x.SubJenisPotongan).Where(x => x.TransId == Id && x.SubJenisPotongan.JenisPotonganId == 3).ToList();
+            var TransPotonganPPH = _context.TransPotongan.Include(x => x.SubJenisPotongan).Where(x => x.TransId == Id && x.SubJenisPotongan.JenisPotonganId == 4 && x.SubJenisPotonganId == Id).ToList();
+            var gettotal = _context.TransMainDetail.Where(x => x.Trans.IsDelete == false && MainDetailId.Contains(x.MainDetailId) && x.Trans.StatusId >= 6).Select(x => x.TotalNominal).DefaultIfEmpty(0).Sum();
+            //var pembuatNote = _context.Trans.Include(x => x.Creater)
+
+            var namaRekanan = data.MainDetail.Main.Vendor.Nama;
+            var noRekRekanan = data.MainDetail.Main.Vendor.NoRek;
+            var cabangPembuka = data.MainDetail.Main.Vendor.Cabang;
+            var noKontrak = data.MainDetail.Nomor;
+            var tglKontrak = data.MainDetail.DocDate;
+            var nilaiKontrak = data.MainDetail.TotalNominal;
+            var adendum = data2.Where(x=>x.MainDetail.JenisDokumenId == 3).Count();
+            var noMemo = data.Trans.Nomor;
+            var tglMemo = data.Trans.DocDate;
+            var keterangan = data.MainDetail.Main.Uraian;
+            var CN = TransRekeningKredit.Select(x => x.Nominal).FirstOrDefault().ToString();            
+            var PPN = TransPotonganPPN.Select(x => x.Total).FirstOrDefault().ToString();
+            var PPH23 = TransPotonganPPH.Select(x => x.Total).FirstOrDefault().ToString();
+            var PPH22 = TransPotonganPPH.Select(x => x.Total).FirstOrDefault().ToString();
+            var PPH42 = TransPotonganPPH.Select(x => x.Total).FirstOrDefault().ToString();
+            var sisaPlafond = (data.MainDetail.TotalNominal - gettotal).ToString();
+            var nilaiTagihan = data.Trans.TotalNominal;
+            var sisa = ((data.MainDetail.TotalNominal - gettotal) - nilaiTagihan);
+            var Pembuat = data.Trans.Creater.Nama;
+            var NOCN = data.Trans.NomorCN;
+            var NOREG = data.Trans.NomorReg;
+            var NOCNPPN = data.Trans.NomorCNPPN;
+            var NOPP = data.Trans.NomorPP;
+
+            string _path = Path.Combine(Server.MapPath("~/Files/Template/"), "Template"); //mengambil path lokasi file
+
+            WordDocument docs = new WordDocument(_path, FormatType.Docx);
+            
+            docs.Replace("%NAMAREKANAN%", namaRekanan, false, true);
+            //if (adendum == 0)
+            //{
+            //    docs.Replace("%ADENDUM%", "", false, true);
+            //}
+            //else
+            //{
+                docs.Replace("%ADENDUM%", adendum.ToString(), false, true);
+            //}
+            docs.Replace("%SISAPLAFON%", sisaPlafond, false, true);
+            docs.Replace("%NILAITAGIHAN%", nilaiTagihan.ToString(), false, true);
+            docs.Replace("%NOREKREKANAN%", noRekRekanan, false, true);
+            docs.Replace("%CABANGPEMBUKA%", cabangPembuka, false, true);
+            docs.Replace("%NOKONTRAK%", noKontrak, false, true);
+            docs.Replace("%TGLKONTRAK%", tglKontrak.ToString(), false, true);
+            docs.Replace("%NILAIKONTRAK%", nilaiKontrak.ToString(), false, true);
+            docs.Replace("%NOMEMO%", noMemo, false, true);
+            docs.Replace("%TGLMEMO%", tglMemo.ToString(), false, true);
+            docs.Replace("%KETERANGAN%", keterangan, false, true);
+            docs.Replace("%CN%", CN, false, true);
+            docs.Replace("%PPN%", PPN, false, true);
+            docs.Replace("%PPH23%", PPH23, false, true);
+            docs.Replace("%PPH22%", PPH22, false, true);
+            docs.Replace("%PPH42%", PPH42, false, true);
+            docs.Replace("%NOCN%", NOCN, false, true);            
+            docs.Replace("%NOREG%", NOREG, false, true);
+            docs.Replace("%NOCNPPN%", NOCNPPN, false, true);           
+            docs.Replace("%NOPP%", NOPP, false, true);
+            docs.Replace("%SISA%", sisa.ToString(), false, true);
+            docs.Replace("%PEMBUAT%", Pembuat, false, true);
+
+            DocToPDFConverter converter = new DocToPDFConverter();
+            Syncfusion.Pdf.PdfDocument PdfDoc = converter.ConvertToPDF(docs);
+            PdfDoc.Save("Template "  + ".pdf", HttpContext.ApplicationInstance.Response, HttpReadType.Save);
+            PdfDoc.Close(true);
+            docs.Close();
+        }
+
+        public ActionResult View(int Id)
+        {
+            AddVM result = new AddVM();
+            result.Id = Id;
+            result.PPN = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 3).ToList();
+            result.PPH = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 4).ToList();
+            result.Bank = _context.Bank.ToList();
+
+            return View(result);
+        }
+
+        public ActionResult PrintPdf()
+        {
+
+            FilterList result = new FilterList();
+            result.ListKodeSurat = _context.KodeSurat.ToList();
+            result.ListStatus = _context.Status.Where(x => x.Id >= 2).ToList();
+            var report = new PartialViewAsPdf("~/Views/Histories/View.cshtml");
+            return report;
+        }
+
+        public ActionResult ViewPdf(int Id)
+        {
+            AddVM result = new AddVM();
+            result.Id = Id;
+            result.PPN = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 3).ToList();
+            result.PPH = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 4).ToList();
+            result.Bank = _context.Bank.ToList();
+            var report = new PartialViewAsPdf("View", result);
+            return report;
+        }
+
         public JsonResult GetFilterList(FilterData Data, bool UseFilter)
         {
             var User = GetUser();
@@ -134,17 +268,8 @@ namespace Apv.Controllers.Transaksi
             var JsonResult = Json(new { data = result }, JsonRequestBehavior.AllowGet);
             JsonResult.MaxJsonLength = int.MaxValue;
             return JsonResult;
-        }
-        public ActionResult View(int Id)
-        {
-            AddVM result = new AddVM();
-            result.Id = Id;
-            result.PPN = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 3).ToList();
-            result.PPH = _context.SubJenisPotongan.Where(x => x.JenisPotonganId == 4).ToList();
-            result.Bank = _context.Bank.ToList();
+        }        
 
-            return View(result);
-        }
         public JsonResult GetById(int Id)
         {
             TransVM result = new TransVM();
@@ -169,12 +294,14 @@ namespace Apv.Controllers.Transaksi
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult GetHistoryById(int Id)
         {
             var result = _context.TransTracking.Include(x => x.Sender).Include(x => x.Receiver).Where(x => x.TransId == Id).OrderBy(x => x.Id).ToList();
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult GetLastKeteranganById(int Id)
         {
             var Keterangan = "";
@@ -184,6 +311,7 @@ namespace Apv.Controllers.Transaksi
 
             return Json(new { Keterangan = Keterangan, Status = Status }, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult GetListSlip(int Id)
         {
             var User = GetUser();
@@ -194,12 +322,14 @@ namespace Apv.Controllers.Transaksi
             JsonResult.MaxJsonLength = int.MaxValue;
             return JsonResult;
         }
+
         public JsonResult GetSlipById(int Id)
         {
             var result = _context.TransSlip.Include(x => x.JenisSlip).Include(x => x.JenisRekeningDebit).Include(x => x.JenisRekeningKredit).Include(x => x.BankKredit).Include(x => x.CurrencyDebit).Include(x => x.CurrencyKredit).SingleOrDefault(x => x.Id == Id);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult TakeBack(int Id)
         {
             bool result = false;
@@ -272,6 +402,7 @@ namespace Apv.Controllers.Transaksi
 
             return Json(new { title = title, text = text, type = type }, JsonRequestBehavior.AllowGet);
         }
+
         public void DownloadPdf(int Id)
         {
             var User = GetUser();
@@ -315,12 +446,23 @@ namespace Apv.Controllers.Transaksi
                 var TransPotonganMaterai = _context.TransPotongan.FirstOrDefault(x => x.TransId == Id && x.SubJenisPotongan.JenisPotonganId == 1);
                 var TransPotonganDenda = _context.TransPotongan.FirstOrDefault(x => x.TransId == Id && x.SubJenisPotongan.JenisPotonganId == 2);
                 var TransPotonganPPN = _context.TransPotongan.Include(x => x.SubJenisPotongan).Where(x => x.TransId == Id && x.SubJenisPotongan.JenisPotonganId == 3).ToList();
+
                 var TotPPN = TransPotonganPPN.Sum(x => x.Total);
+                
+                
                 var TotPengadaanPPN = TotPengadaan + TotPPN;
                 var TransPotonganPPH = _context.TransPotongan.Include(x => x.SubJenisPotongan).Where(x => x.TransId == Id && x.SubJenisPotongan.JenisPotonganId == 4).ToList();
                 var TotPPH = TransPotonganPPH.Sum(x => x.Total);
                 var TotPengadaanPPH = TotPengadaanPPN - TotPPH;
-                var JumlahPembayaran = TotPengadaanPPH - TotPPN - TransPotonganDenda.Nominal;
+
+                var PPNDipotong = TotPPN;
+                if (TransPotonganPPN[0].Nominal < 10000000)
+                {
+                    PPNDipotong = 0;
+                }
+
+                var JumlahPembayaran = TotPengadaanPPH - PPNDipotong - TransPotonganDenda.Nominal;
+                
 
                 var TransRekeningMain = _context.TransRekening.Include(x => x.Bank).FirstOrDefault(x => x.TransId == Id && x.IsMain == true);
                 var TransRekeningDebit = _context.TransRekening.Where(x => x.TransId == Id && x.IsMain == false && x.IsDebit == true).ToList();
@@ -329,9 +471,9 @@ namespace Apv.Controllers.Transaksi
                 var Kredit = TransRekeningKredit.Sum(x => x.Nominal);
                 var TransAttachment = _context.TransAttachment.Include(x => x.SubJenisAttch.JenisAttch).Include(x => x.OutputAttch).Where(x => x.TransId == Id).ToList();
                 #endregion
-
+                
                 #region Memo
-                pdfDoc.SetPageSize(PageSize.A4);
+                pdfDoc.SetPageSize(iTextSharp.text.PageSize.A4);
                 pdfDoc.SetMargins(40, 40, 40, 40); //( point marginLeft, point marginRight, point marginTop, point marginBottom )
                 pdfDoc.Open();
 
@@ -990,7 +1132,7 @@ namespace Apv.Controllers.Transaksi
                 table.AddCell(cell);
 
                 cell = new PdfPCell();
-                cell = new PdfPCell(new Phrase(String.Format("Total Pajak Penghasilan yang harus dipotong"), ArialNormal));
+                cell = new PdfPCell(new Phrase(String.Format("Jumlah PPH"), ArialNormal));
                 cell.Border = 0;
                 cell.Colspan = 10;
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
@@ -1176,7 +1318,7 @@ namespace Apv.Controllers.Transaksi
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;
                 table.AddCell(cell);
 
-                cell = new PdfPCell(new Phrase(String.Format(TotPPN.ToString("n0")), ArialNormal));
+                cell = new PdfPCell(new Phrase(String.Format(PPNDipotong.ToString("n0")), ArialNormal));
                 cell.Border = 0;
                 cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 cell.VerticalAlignment = Element.ALIGN_MIDDLE;

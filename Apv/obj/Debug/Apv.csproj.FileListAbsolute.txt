@@ -475,6 +475,8 @@ C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Dapper.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\EntityFramework.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\EntityFramework.SqlServer.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\EPPlus.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\EPPlus.Interfaces.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\EPPlus.System.Drawing.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\itextsharp.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.AspNet.Identity.Core.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.AspNet.Identity.EntityFramework.dll
@@ -495,6 +497,14 @@ C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.Owin.Security.Twitter.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.Web.Infrastructure.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Newtonsoft.Json.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Owin.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\RazorPDF.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Rotativa.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.Compression.Base.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.DocIO.Base.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.DocToPdfConverter.Base.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.Licensing.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.OfficeChart.Base.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.Pdf.Base.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\System.Web.Helpers.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\System.Web.Mvc.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\System.Web.Optimization.dll
@@ -512,6 +522,11 @@ C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.AspNet.SignalR.SystemWeb.pdb
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.IO.RecyclableMemoryStream.xml
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.Compression.Base.xml
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.DocIO.Base.xml
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.DocToPdfConverter.Base.xml
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.OfficeChart.Base.xml
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Syncfusion.Pdf.Base.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\System.Web.Helpers.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\System.Web.Mvc.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\System.Web.Optimization.xml
@@ -564,8 +579,7 @@ C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.EditVendorRekNPWP.resou
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.EditBankMaster.resources
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.editMainDetailTanggal.resources
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.addNoinTrans.resources
-C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.falseTransAttch.resources
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.CurrentUser.resources
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.csproj.GenerateResource.Cache
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.pdb
-C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\RazorPDF.dll
