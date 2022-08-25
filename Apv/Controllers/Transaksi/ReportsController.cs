@@ -518,9 +518,9 @@ namespace Apv.Controllers.Transaksi
             ws.Column(2).Width = 20;
             ws.Column(3).Width = 20;
             ws.Column(4).Width = 20;
-            ws.Column(5).Width = 20;
+            ws.Column(5).Width = 40;
             ws.Column(6).Width = 20;
-            ws.Column(7).Width = 20;
+            ws.Column(7).Width = 40;
             ws.Column(8).Width = 20;
             ws.Column(9).Width = 20;
             ws.Column(10).Width = 20;
@@ -547,16 +547,16 @@ namespace Apv.Controllers.Transaksi
             if (data.Count() > 0)
             {
                 #region Data Tersedia
-                int tr = 1, no = 1, indx = 1;
-                decimal tarif = 0;
+                int tr = 1, no = 1;
+
 
                 foreach (var item in data)
                 {
 
                     ws.Cells[4 + tr, 1].Value = "PFA/7.4/" + item.Nomor;
-                    ws.Cells[4 + tr, 2].Value = item.CreateDate;
+                    ws.Cells[4 + tr, 2].Value = item.CreateDate.ToString();
                     ws.Cells[4 + tr, 3].Value = "PYN/760/082022/" + item.NomorReg;
-                    ws.Cells[4 + tr, 4].Value = item.DocDate;
+                    ws.Cells[4 + tr, 4].Value = item.DocDate.ToString();
 
                     #region Get Vendor dan norek
                     TransRekening rekening = _context.TransRekening.Where(x => x.TransId == item.Id && x.BankId != null).FirstOrDefault();
@@ -573,54 +573,58 @@ namespace Apv.Controllers.Transaksi
                     ws.Cells[4 + tr, 8].Value = MainDetail.Nomor;
                     ws.Cells[4 + tr, 9].Value = "";
 
-                    TransAttachment attachment = _context.TransAttachment.Where(x => x.TransId == item.Id && x.SubJenisAttchId == 3).FirstOrDefault();
-                    ws.Cells[4 + tr, 10].Value = attachment.Nomor;
-
+                    TransAttachment attachment2 = _context.TransAttachment.Where(x => x.TransId == item.Id && x.SubJenisAttchId == 3).FirstOrDefault();
+                    if (attachment2 != null)
+                    {
+                        ws.Cells[4 + tr, 10].Value = attachment2.Nomor;
+                    }
+                    else
+                    {
+                        ws.Cells[4 + tr, 10].Value = "";
+                    }
                     TransRekening rekening_buku = _context.TransRekening.Where(x => x.TransId == item.Id && x.IsDebit == true).FirstOrDefault();
-                    ws.Cells[4 + tr, 11].Value = rekening_buku.NoRek ;
-                    ws.Cells[4 + tr, 12].Value = rekening_buku.Nominal;
+                    ws.Cells[4 + tr, 11].Value = rekening_buku.NoRek;
+                    ws.Cells[4 + tr, 12].Value = String.Format("{0:##,##}", rekening_buku.Nominal);
 
                     var trans_vendor = _context.TransRekening.Where(x => x.TransId == item.Id && x.IsDebit == false).ToList();
-                    ws.Cells[4 + tr, 13].Value = trans_vendor[0].Nominal;
-                    ws.Cells[4 + tr, 14].Value = trans_vendor[0].Nominal;
+                    ws.Cells[4 + tr, 13].Value = String.Format("{0:##,##}", trans_vendor[0].Nominal);
 
 
-
-                    for(int i =1; i<=trans_vendor.Count()-1;i++)
+                    var trans_potongan_PPH = _context.TransPotongan.Include(x => x.SubJenisPotongan).Where(x => x.TransId == item.Id && x.SubJenisPotongan.JenisPotonganId == 4).ToList();
+                    for (int i = 0; i <= trans_potongan_PPH.Count() - 1; i++)
                     {
-                        if (trans_vendor[i].Nama.ToLower().Split()[0] == "pph")
+                        if (trans_potongan_PPH[i].SubJenisPotongan.Nama.Split()[0].ToLower() == "pph")
                         {
 
-                            if (trans_vendor[2].Nama.ToLower().Contains("pph pasal 22"))
+                            if (trans_potongan_PPH[i].SubJenisPotongan.Nama.ToLower().Contains("pph pasal 22"))
                             {
-                                ws.Cells[4 + tr, 15].Value = trans_vendor[0].Nominal;
+                                ws.Cells[4 + tr, 14].Value = String.Format("{0:##,##}", trans_potongan_PPH[i].Total);
                             }
-                            else if (trans_vendor[2].Nama.ToLower().Contains("pph pasal 23"))
+                            if (trans_potongan_PPH[i].SubJenisPotongan.Nama.ToLower().Contains("pph pasal 23"))
                             {
-                                ws.Cells[4 + tr, 16].Value = trans_vendor[0].Nominal;
+                                ws.Cells[4 + tr, 15].Value = String.Format("{0:##,##}", trans_potongan_PPH[i].Total);
                             }
-                            else if (trans_vendor[2].Nama.ToLower().Contains("pph pasal 4(2)"))
+                            if (trans_potongan_PPH[i].SubJenisPotongan.Nama.ToLower().Contains("pph pasal 4(2)"))
                             {
-                                ws.Cells[4 + tr, 17].Value = trans_vendor[0].Nominal;
+                                ws.Cells[4 + tr, 16].Value = String.Format("{0:##,##}", trans_potongan_PPH[i].Total);
                             }
-                            else if (trans_vendor[2].Nama.ToLower().Contains("trf pph 4(2)"))
+                            if (trans_potongan_PPH[i].SubJenisPotongan.Nama.ToLower().Contains("trf pph 4(2)"))
                             {
-                                ws.Cells[4 + tr, 18].Value = trans_vendor[0].Nominal;
+                                ws.Cells[4 + tr, 17].Value = String.Format("{0:##,##}", trans_potongan_PPH[i].Total);
                             }
-                            else if (trans_vendor[2].Nama.ToLower().Contains("pph psl 21"))
+                            if (trans_potongan_PPH[i].SubJenisPotongan.Nama.ToLower().Contains("pph pasal 21"))
                             {
-                                ws.Cells[4 + tr, 19].Value = trans_vendor[0].Nominal;
+                                ws.Cells[4 + tr, 18].Value = String.Format("{0:##,##}", trans_potongan_PPH[i].Total);
                             }
                         }
                     }
-                    ws.Cells[4 + tr, 20].Value = trans_vendor[1].Nominal;
-                    ws.Cells[4 + tr, 21].Value = ""; //tgl masa ppn kadang diisi kadang tidak?
-                    ws.Cells[4 + tr, 23].Value = ""; //Giro Internal Phone plus?
-                    ws.Cells[4 + tr, 24].Value = ""; //Giro Internal Phone plus?
-
+                    var trans_potongan_PPN = _context.TransPotongan.Include(x => x.SubJenisPotongan).Where(x => x.TransId == item.Id && x.SubJenisPotongan.JenisPotonganId == 3).ToList();
+                    ws.Cells[4 + tr, 19].Value = String.Format("{0:##,##}", trans_potongan_PPN.Sum(x => x.Total));
+                    ws.Cells[4 + tr, 20].Value = ""; //tgl masa ppn kadang diisi kadang tidak?
+                    ws.Cells[4 + tr, 21].Value = ""; //Giro Internal Phone plus?
                     TransPotongan denda = _context.TransPotongan.Where(x => x.TransId == item.Id && x.SubJenisPotonganId == 2).FirstOrDefault();
-                    ws.Cells[4 + tr, 25].Value = denda.Nominal; //Giro Internal Phone plus?
-
+                    ws.Cells[4 + tr, 22].Value = String.Format("{0:##,##}", denda.Nominal);
+                    ws.Cells[4 + tr, 23].Value = item.Prestasi;
                     #region Style
                     ws.Cells[4 + tr, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
@@ -631,10 +635,10 @@ namespace Apv.Controllers.Transaksi
                     ws.Cells[4 + tr, 4, 4 + tr, 5].Style.Numberformat.Format = "@";
                     ws.Cells[4 + tr, 6].Style.Numberformat.Format = "#0\\.00%";
                     ws.Cells[4 + tr, 7, 4 + tr, 8].Style.Numberformat.Format = "_-* #,##0_-;-* #,##0_-;_-* \"-\"??_-;_-@_-";
-                    ws.Cells[4 + tr, 6, 4 + tr, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                    ws.Cells[4 + tr, 1, 4 + tr, 25].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
 
-                    ws.Cells[4 + tr, 1, 4 + tr, 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                    ws.Cells[4 + tr, 11].Style.WrapText = true;
+                    ws.Cells[4 + tr, 1, 4 + tr, 25].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    ws.Cells[4 + tr, 7].Style.WrapText = true;
                     #endregion
 
 
@@ -642,10 +646,6 @@ namespace Apv.Controllers.Transaksi
                     tr++;
                 }
 
-                #region Sub Total
-                ws.Cells[4 + tr, 1].Value = "Sub Total";
-                ws.Cells[4 + tr, 7].Formula = "=SUM(" + ws.Cells[4 + indx, 7].Address + ":" + ws.Cells[4 + tr - 1, 7].Address + ")";
-                ws.Cells[4 + tr, 8].Formula = "=SUM(" + ws.Cells[4 + indx, 8].Address + ":" + ws.Cells[4 + tr - 1, 8].Address + ")";
 
                 #region Style
                 ws.Cells[4 + tr, 1, 4 + tr, 6].Merge = true;
@@ -656,12 +656,12 @@ namespace Apv.Controllers.Transaksi
 
                 ws.Cells[4 + tr, 1, 4 + tr, 9].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
-                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                ws.Cells[4, 1, 4 + tr, 9].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                #endregion                
+                ws.Cells[4, 1, 4 + tr, 25].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 4 + tr, 25].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 4 + tr, 25].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                ws.Cells[4, 1, 4 + tr, 25].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 #endregion
+
 
                 #endregion
             }
@@ -683,11 +683,11 @@ namespace Apv.Controllers.Transaksi
             }
 
             #endregion
-           
+
 
             return ws;
         }
-    
+
 
 
         public ExcelWorksheet KartuChecklist(ExcelPackage pck, int Id)
@@ -942,7 +942,7 @@ namespace Apv.Controllers.Transaksi
                     #region Create Judul
                     ws.Cells[1 + tr, 1].Value = "Nama Rekanan";
                     ws.Cells[1 + tr, 3].Value = ": " + item.Vendor.Nama;
-                    ws.Cells[1 + tr, 7].Value = "Termin : " + item.Termin;                    
+                    ws.Cells[1 + tr, 7].Value = "Termin : " + item.Termin;
                     ws.Cells[1 + tr, 8].Value = "Dari : ";
                     ws.Cells[1 + tr, 9].Value = "No Rekening";
                     ws.Cells[1 + tr, 10].Value = ": " + item.MainDetail.NoRek;
@@ -1057,7 +1057,7 @@ namespace Apv.Controllers.Transaksi
                     tr++;
                     tr++;
                 }
-                
+
                 //last = 5 + tr;
                 #endregion
             }
@@ -1106,7 +1106,7 @@ namespace Apv.Controllers.Transaksi
             HttpContext.Response.AddHeader("", "");
             HttpContext.Response.Charset = System.Text.UTF8Encoding.UTF8.WebName;
             HttpContext.Response.ContentEncoding = System.Text.UTF8Encoding.UTF8;
-            HttpContext.Response.AddHeader("content-disposition", "attachment;  filename=Rekap PPH " + StartDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")) + " - "+ EndDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")) + " .xlsx");
+            HttpContext.Response.AddHeader("content-disposition", "attachment;  filename=Rekap PPH " + StartDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")) + " - " + EndDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID")) + " .xlsx");
             HttpContext.Response.ContentType = "application/text";
             HttpContext.Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");
             HttpContext.Response.BinaryWrite(pck.GetAsByteArray());
@@ -1125,7 +1125,7 @@ namespace Apv.Controllers.Transaksi
             //var sheets = "PPN Masukan WAPU";
             var sheets = "Transaksi Harian";
             ExcelWorksheet ws = TransaksiHarian(pck, StartDate, EndDate, sheets);
-            
+
 
 
             HttpContext.Response.Clear();
@@ -1173,7 +1173,7 @@ namespace Apv.Controllers.Transaksi
             HttpContext.Response.ContentEncoding = System.Text.Encoding.GetEncoding("utf-8");
             HttpContext.Response.BinaryWrite(pck.GetAsByteArray());
             HttpContext.Response.End();
-        }        
+        }
 
         public ActionResult UploadData()
         {
@@ -1193,7 +1193,7 @@ namespace Apv.Controllers.Transaksi
         }
 
         public JsonResult UploadDebit(HttpPostedFileBase file)
-        {            
+        {
             var result = false;
 
             if (file != null)
@@ -1231,9 +1231,9 @@ namespace Apv.Controllers.Transaksi
                                         //trans.Alamat = worksheet.Cells[i, 3].Text;
                                         _context.Entry(trans).State = EntityState.Modified;
                                         _context.SaveChanges();
-                                    }                                    
+                                    }
                                 }
-                            }                            
+                            }
 
                             System.IO.File.Delete(path);
 
