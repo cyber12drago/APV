@@ -64,9 +64,9 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="col-sm-2 control-label text-right">Uraian</label>
+                            <label class="col-sm-2 control-label text-right">Jenis Pekerjaan</label>
                             <div class="col-sm-10" id="divUraian">
-                                <textarea class="form-control" rows="2" id="Uraian" readonly disabled placeholder="Uraian"></textarea>
+                                <textarea class="form-control" rows="2" id="Uraian" readonly disabled placeholder="Jenis Pekerjaan"></textarea>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -238,85 +238,67 @@
                         <div class="form-group col-md-12 GKredit" id="GKredit0" count="3">
                             <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
                             <div class="col-sm-3" id="divKredit0">
-                                <textarea class="form-control input-sm" id="Kredit0" readonly disabled rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
+                                <textarea class="form-control input-sm" id="Kredit0" autocomplete="off" rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
                             </div>
                             <div class="col-sm-3" id="divNoRekKredit0">
-                                <input type="text" class="form-control input-sm" id="NoRekKredit0" readonly disabled autocomplete="off" placeholder="Nomor Rekening">
+                                <input type="text" class="form-control input-sm NoRek" id="NoRekKredit0" SetId="Kredit0" placeholder="Nomor Rekening">
                             </div>
                             <div class="col-sm-3" id="divNominalKredit0">
-                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit0" readonly disabled oninput="Hitung(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
+                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit0" oninput="HitungRek(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
+                            </div>
+                            <div class="col-sm-1">
+                                <button class="btn btn-default btn-sm" onclick="AddKredit()"><i class="fa fa-plus-circle"></i></button>
                             </div>
                         </div>
                         <div class="form-group col-md-12 GKredit" id="GKredit1">
                             <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
                             <div class="col-sm-3" id="divKredit1">
-                                <textarea class="form-control input-sm" id="Kredit1" readonly disabled rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
+                                <textarea class="form-control input-sm" id="Kredit1" autocomplete="off" rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
                             </div>
                             <div class="col-sm-3" id="divNoRekKredit1">
-                                <input type="text" class="form-control input-sm" id="NoRekKredit1" readonly disabled autocomplete="off" placeholder="Nomor Rekening">
+                                <input type="text" class="form-control input-sm NoRek" id="NoRekKredit1" SetId="Kredit1" placeholder="Nomor Rekening">
                             </div>
                             <div class="col-sm-3" id="divNominalKredit1">
+                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit1" oninput="HitungRek(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
+                            </div>
+                            <div class="col-sm-1">
                                 <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit1" readonly disabled oninput="Hitung(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
                             </div>
                         </div>
                         <div class="form-group col-md-12 GKredit" id="GKredit2">
                             <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
                             <div class="col-sm-3" id="divKredit2">
-                                <textarea class="form-control input-sm" id="Kredit2" readonly disabled rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
+                                <textarea class="form-control input-sm" id="Kredit2" autocomplete="off" rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
                             </div>
                             <div class="col-sm-3" id="divNoRekKredit2">
-                                <input type="text" class="form-control input-sm" id="NoRekKredit2" readonly disabled autocomplete="off" placeholder="Nomor Rekening">
+                                <input type="text" class="form-control input-sm NoRek" id="NoRekKredit2" SetId="Kredit2" placeholder="Nomor Rekening">
                             </div>
                             <div class="col-sm-3" id="divNominalKredit2">
-                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit2" readonly disabled oninput="Hitung(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
+                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit2" oninput="HitungRek(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
+                            </div>
+                            <div class="col-sm-1">
+                                <button class="btn btn-danger btn-sm" onclick="Remove('GKredit2'); HitungRek()"><i class="fa fa-trash"></i></button>
                             </div>
                         </div>
                         <div class="form-group col-md-12 GKredit" id="GKredit3">
                             <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
                             <div class="col-sm-3" id="divKredit3">
-                                <textarea class="form-control input-sm" id="Kredit3" readonly disabled rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
+                                <textarea class="form-control input-sm" id="Kredit3" autocomplete="off" rows="1" placeholder="Nama Kredit" style="resize:vertical;"></textarea>
                             </div>
                             <div class="col-sm-3" id="divNoRekKredit3">
-                                <input type="text" class="form-control input-sm" id="NoRekKredit3" readonly disabled autocomplete="off" placeholder="Nomor Rekening">
+                                <input type="text" class="form-control input-sm NoRek" id="NoRekKredit3" SetId="Kredit3" placeholder="Nomor Rekening">
                             </div>
                             <div class="col-sm-3" id="divNominalKredit3">
-                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit3" readonly disabled oninput="Hitung(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
+                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit3" oninput="HitungRek(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
+                            </div>
+                            <div class="col-sm-1">
+                                <button class="btn btn-danger btn-sm" onclick="Remove('GKredit3'); HitungRek()"><i class="fa fa-trash"></i></button>
                             </div>
                         </div>
                         <div class="GLampiran form-group col-md-12">
                             <label class="col-sm-2 control-label text-right">Lampiran</label>
                         </div>
                         <div class="GLampiran" id="GLampiran0" count="0">
-                            <div class="form-group col-md-12">
-                                <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
-                                <div class="col-sm-10">
-                                    <label class="col-sm-1 control-label text-right">Jenis</label>
-                                    <div class="col-sm-11" id="divSubJenisAttch0">
-                                        <input type="text" class="form-control" id="SubJenisAttch0" readonly disabled placeholder="Jenis Attachment">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <label class="col-sm-1 control-label text-right">Tanggal</label>
-                                    <div class="col-sm-3" id="divTanggal0">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control Tanggal" readonly disabled id="Tanggal0" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <label class="col-sm-1 control-label text-right">Jumlah</label>
-                                    <div class="col-sm-3" id="divJumlah0">
-                                        <input type="text" class="form-control text-right" readonly disabled oninput="this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" id="Jumlah0" placeholder="Jumlah Lembar">
-                                    </div>
-                                    <label class="col-sm-1 control-label text-right">Nomor</label>
-                                    <div class="col-sm-3" id="divNomor0">
-                                        <input type="text" class="form-control" id="Nomor0" readonly disabled placeholder="Nomor Lampiran">
-                                    </div>
-                                </div>
-                            </div>
                             <div class="form-group col-md-12">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <label class="col-sm-1 control-label text-right">Output</label>
@@ -367,6 +349,36 @@
                                         <span class="input-group-addon" id="NomorPPSpan">
                                         </span>
                                         <input type="text" class="form-control" id="NomorPP" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
+                                <div class="col-sm-10">
+                                    <label class="col-sm-1 control-label text-right">Jenis</label>
+                                    <div class="col-sm-11" id="divSubJenisAttch0">
+                                        <input type="text" class="form-control" id="SubJenisAttch0" readonly disabled placeholder="Jenis Attachment">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <label class="col-sm-1 control-label text-right">Tanggal</label>
+                                    <div class="col-sm-3" id="divTanggal0">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control Tanggal" readonly disabled id="Tanggal0" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-1 control-label text-right">Jumlah</label>
+                                    <div class="col-sm-3" id="divJumlah0">
+                                        <input type="text" class="form-control text-right" readonly disabled oninput="this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" id="Jumlah0" placeholder="Jumlah Lembar">
+                                    </div>
+                                    <label class="col-sm-1 control-label text-right">Nomor</label>
+                                    <div class="col-sm-3" id="divNomor0">
+                                        <input type="text" class="form-control" id="Nomor0" readonly disabled placeholder="Nomor Lampiran">
                                     </div>
                                 </div>
                             </div>
@@ -870,12 +882,13 @@
             var year = date.getFullYear();
             return year;
         }
-
+        
         function ClearError() {
             $(".has-error").removeClass("has-error");
         }
-
+        
         function GetData() {
+            debugger;
             var TransId = $("#TransId").val();
 
             $.ajax({
@@ -983,7 +996,7 @@
                             $("#Nomor" + i).val(value.Nomor);
                             $("#OutputAttch" + i).val(value.OutputAttch.Nama);
                             $("#Nomor" + i).val(value.Nomor);
-                            $("#File" + i).val(value.Path);
+                            //$("#File" + i).val(value.Path);
                             $("#URLFile" + i).attr("href", "@Url.Content("~/Files/Attachment")/" + value.Path);
 
                             if (value.OutputAttchId == 1 || value.OutputAttchId == 3) {
@@ -992,7 +1005,7 @@
                             }
                         });
                     }
-
+                    console.log($("#NomorReg"))
                     $("#NomorRegSpan").html('PYN / 760 / ' + formatDateMMyyyy(result.Trans.DocDate) + ' / ');
                     $("#NomorReg").val(result.Trans.NomorReg);
                     $("#NomorCNSpan").html(formatDateyyyy(result.Trans.DocDate) + ' / OPR / 4.6 / ');
@@ -1081,6 +1094,9 @@
             var JumlahPembayaran = 0;
             var Debit = 0;
             var Kredit = 0;
+            var pengadaan = $('#NilaiPengadaan').val();
+            pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+
             $('.Pengadaan').each(function (i, value) {
                 var nilai = $(this).val();
                 if (isNaN(minkoma(nilai)) || nilai == "") {
@@ -1122,6 +1138,14 @@
                 Denda = 0;
             }
 
+            if (parseInt(pengadaan) >= 10000000) {
+
+                $('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
+
+            } else {
+                TotPPN = 0;
+                $('#PPNPembayaran').val(0);
+            }
             JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
 
             $('#NilaiPengadaan').val(decimal(TotPengadaan));
@@ -1198,6 +1222,7 @@
         }
 
         function Kredit(Pajak, Id) {
+
             var Nama = $('#' + Pajak + '0').find('option:selected').attr('Nama2');
             var Norek = $('#' + Pajak + '0').find('option:selected').attr('Norek');
 
@@ -1208,7 +1233,15 @@
                 $("#NoRekKredit" + Id).val(Norek);
             }
             if ($("#NominalKredit" + Id).length) {
-                $("#NominalKredit" + Id).val($('#Total' + Pajak + '0').val());
+                var pengadaan = $('#NilaiPengadaan').val();
+                pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+                if (parseInt(pengadaan) < 10000000 && Pajak == "PPN") {
+                    $("#NominalKredit" + Id).val(0);
+                }
+                else {
+                    $("#NominalKredit" + Id).val($('#Total' + Pajak + '0').val());
+
+                }
             }
         }
 
@@ -1381,15 +1414,15 @@
             html += '<div class="col-sm-3" id="divNomor' + i + '"><input type="text" class="form-control input-sm" id="Nomor' + i + '" readonly disabled placeholder="Nomor Lampiran"></div>';
             html += '</div>';
             html += '</div>';
-            html += '<div class="form-group col-md-12">';
-            html += '<div class="col-sm-offset-2 col-sm-10">';
-            html += '<label class="col-sm-1 control-label text-right">Output</label>';
-            html += '<div class="col-sm-3" id="divOutputAttch' + i + '"><input type="text" class="form-control input-sm" id="OutputAttch' + i + '" readonly disabled placeholder="Output Attachment"></div>';
-            html += '<label class="col-sm-1 control-label text-right" id="labelFile' + i + '">File</label>';
-            html += '<div class="col-sm-3" id="divFile' + i + '"><div class="input-group input-group-sm"><input type="text" class="form-control input-sm" id="File' + i + '" readonly disabled path="" placeholder="File Lampiran">';
-            html += '<span class="input-group-btn"><a href="#" id="URLFile' + i + '" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a></span>';
-            html += '</div>';
-            html += '</div>';
+            //html += '<div class="form-group col-md-12">';
+            //html += '<div class="col-sm-offset-2 col-sm-10">';
+            //html += '<label class="col-sm-1 control-label text-right">Output</label>';
+            //html += '<div class="col-sm-3" id="divOutputAttch' + i + '"><input type="text" class="form-control input-sm" id="OutputAttch' + i + '" readonly disabled placeholder="Output Attachment"></div>';
+            //html += '<label class="col-sm-1 control-label text-right" id="labelFile' + i + '">File</label>';
+            //html += '<div class="col-sm-3" id="divFile' + i + '"><div class="input-group input-group-sm"><input type="text" class="form-control input-sm" id="File' + i + '" readonly disabled path="" placeholder="File Lampiran">';
+            //html += '<span class="input-group-btn"><a href="#" id="URLFile' + i + '" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a></span>';
+            //html += '</div>';
+            //html += '</div>';
             html += '</div>';
             html += '</div>';
             html += '</div>';

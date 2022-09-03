@@ -301,7 +301,7 @@
                                 <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit1" oninput="HitungRek(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
                             </div>
                             <div class="col-sm-1">
-                                <button class="btn btn-danger btn-sm" onclick="Remove('GKredit1'); HitungRek()"><i class="fa fa-trash"></i></button>
+                                <input type="text" class="form-control text-right input-sm Kredit" id="NominalKredit1" readonly disabled oninput="Hitung(); this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" autocomplete="off" placeholder="Nominal Kredit">
                             </div>
                         </div>
                         <div class="form-group col-md-12 GKredit" id="GKredit2">
@@ -622,6 +622,9 @@
             var JumlahPembayaran = 0;
             var Debit = 0;
             var Kredit = 0;
+            var pengadaan = $('#NilaiPengadaan').val();
+            pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+
             $('.Pengadaan').each(function (i, value) {
                 var nilai = $(this).val();
                 if (isNaN(minkoma(nilai)) || nilai == "") {
@@ -663,19 +666,29 @@
                 Denda = 0;
             }
 
-            JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
+
 
             $('#NilaiPengadaan').val(decimal(TotPengadaan));
-            $('#PajakPertambahan').val(decimal(TotPPN));
-            $('#InclusivePPN').val(decimal(TotPengadaanPPN));
+            $('#PajakPertambahan').val(decimal(Math.round(TotPPN)));
+            $('#InclusivePPN').val(decimal(Math.round(TotPengadaanPPN)));
             //$('#InclusivePPNMaterai').val(decimal(TotPengadaanPPNMat));
-            $('#PajakPenghasilan').val(decimal(TotPPH));
-            $('#InclusivePPH').val(decimal(TotPengadaanPPH));
-            $('#BrutoPembayaran').val(decimal(TotPengadaanPPH));
-            $('#PPNPembayaran').val(decimal(TotPPN));
-            $('#JumlahPembayaran').val(decimal(JumlahPembayaran));
-            $('#NominalKredit0').val(decimal(JumlahPembayaran));
-            $('#NominalKredit3').val(decimal(Denda));
+            $('#PajakPenghasilan').val(decimal(Math.round(TotPPH)));
+            $('#InclusivePPH').val(decimal(Math.round(TotPengadaanPPH)));
+            $('#BrutoPembayaran').val(decimal(Math.round(TotPengadaanPPH)));
+
+            if (parseInt(pengadaan) >= 10000000) {
+
+                $('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
+
+            } else {
+                TotPPN = 0;
+                $('#PPNPembayaran').val(0);
+            }
+            JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
+            //$('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
+            $('#JumlahPembayaran').val(decimal(Math.round(JumlahPembayaran)));
+            $('#NominalKredit0').val(decimal(Math.round(JumlahPembayaran)));
+            $('#NominalKredit3').val(decimal(Math.round(Denda)));
 
             $('.Debit').each(function (i, value) {
                 var nilai = $(this).val();
@@ -803,7 +816,15 @@
                 $("#NoRekKredit" + Id).val(Norek);
             }
             if ($("#NominalKredit" + Id).length) {
-                $("#NominalKredit" + Id).val($('#Total' + Pajak + '0').val());
+                var pengadaan = $('#NilaiPengadaan').val();
+                pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+                if (parseInt(pengadaan) < 10000000 && Pajak == "PPN") {
+                    $("#NominalKredit" + Id).val(0);
+                }
+                else {
+                    $("#NominalKredit" + Id).val($('#Total' + Pajak + '0').val());
+
+                }
             }
         }
 
@@ -1136,14 +1157,14 @@
                 if ($("#NoRekDebit" + i).length) { if ($.trim($("#NoRekDebit" + i).val()) == "") { $("#divNoRekDebit" + i).addClass("has-error"); eror = true; } }
                 if ($("#NominalDebit" + i).length) { if ($.trim($("#NominalDebit" + i).val()) == "" || minkoma($("#NominalDebit" + i).val()) == 0) { $("#divNominalDebit" + i).addClass("has-error"); eror = true; } }
             }
-            var Kredit = $('#GKredit0').attr('count');
-            for (var i = 0; i <= Kredit; i++) {
-                if (i != 3) {
-                    if ($("#Kredit" + i).length) { if ($.trim($("#Kredit" + i).val()) == "") { $("#divKredit" + i).addClass("has-error"); eror = true; } }
-                    if ($("#NoRekKredit" + i).length) { if ($.trim($("#NoRekKredit" + i).val()) == "") { $("#divNoRekKredit" + i).addClass("has-error"); eror = true; } }
-                    if ($("#NominalKredit" + i).length) { if ($.trim($("#NominalKredit" + i).val()) == "" || minkoma($("#NominalKredit" + i).val()) == 0) { $("#divNominalKredit" + i).addClass("has-error"); eror = true; } }
-                }
-            }
+            //var Kredit = $('#GKredit0').attr('count');
+            //for (var i = 0; i <= Kredit; i++) {
+            //    if (i != 3) {
+            //        if ($("#Kredit" + i).length) { if ($.trim($("#Kredit" + i).val()) == "") { $("#divKredit" + i).addClass("has-error"); eror = true; } }
+            //        if ($("#NoRekKredit" + i).length) { if ($.trim($("#NoRekKredit" + i).val()) == "") { $("#divNoRekKredit" + i).addClass("has-error"); eror = true; } }
+            //        if ($("#NominalKredit" + i).length) { if ($.trim($("#NominalKredit" + i).val()) == "" || minkoma($("#NominalKredit" + i).val()) == 0) { $("#divNominalKredit" + i).addClass("has-error"); eror = true; } }
+            //    }
+            //}
             if (minkoma($("#TotalDebit").val()) != minkoma($("#TotalKredit").val())) { $("#divTotalDebit").addClass("has-error"); $("#divTotalKredit").addClass("has-error"); eror = true; }
 
             if (!eror) {

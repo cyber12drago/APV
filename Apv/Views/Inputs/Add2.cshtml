@@ -121,9 +121,9 @@
                             }
                         }
                         <div class="form-group col-md-12">
-                            <label class="col-sm-2 control-label text-right">Uraian</label>
+                            <label class="col-sm-2 control-label text-right">Jenis Pekerjaan</label>
                             <div class="col-sm-10" id="divUraian">
-                                <textarea class="form-control" rows="2" id="Uraian" readonly disabled placeholder="Uraian">@Model.Trans.Uraian</textarea>
+                                <textarea class="form-control" rows="2" id="Uraian" readonly disabled placeholder="Jenis Pekerjaan">@Model.Trans.Uraian</textarea>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -135,6 +135,43 @@
                             foreach (var item in Model.TransAttachment)
                             {
                                 <div class="GLampiran" id="GLampiran@(no)" count="@allcount">
+                                    <div class="form-group col-md-12">
+                                        <div class="col-sm-offset-1 col-sm-10">
+                                            <label class="col-sm-1 control-label text-right">Output</label>
+                                            <div class="col-sm-3" id="divOutputAttch@(no)">
+                                                <select required="required" class="form-control select2" id="OutputAttch@(no)" onchange="OutputAttch(@(no))" style="width: 100%;">
+                                                    @foreach (var data in Model.OutputAttch)
+                                                    {
+                                                        if (data.Id == item.OutputAttchId)
+                                                        {
+                                                            <option value="@data.Id" selected>@data.Nama</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@data.Id">@data.Nama</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                            <label class="col-sm-1 control-label text-right">File</label>
+                                            <div class="col-sm-3" id="divFile@(no)">
+                                                @if (item.OutputAttchId == 2 || item.OutputAttchId == 4)
+                                                {
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="FileOld@(no)" value="@item.Path" disabled readonly>
+                                                        <span class="input-group-btn">
+                                                            <a href="@Url.Content("~/Files/Attachment/")@item.Path" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a>
+                                                            <button class="btn btn-danger btn-flat" onclick="DeleteAttch(@no, '@item.Path')"><i class="fa fa-remove"></i></button>
+                                                        </span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <input type="file" class="form-control" id="File@(no)" path="@item.Path" placeholder="File Lampiran">
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group col-md-12">
                                         <input type="hidden" id="Id@(no)" value="@item.Id" />
                                         <label class="col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
@@ -192,43 +229,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-12">
-                                        <div class="col-sm-offset-1 col-sm-10">
-                                            <label class="col-sm-1 control-label text-right">Output</label>
-                                            <div class="col-sm-3" id="divOutputAttch@(no)">
-                                                <select required="required" class="form-control select2" id="OutputAttch@(no)" onchange="OutputAttch(@(no))" style="width: 100%;">
-                                                    @foreach (var data in Model.OutputAttch)
-                                                    {
-                                                        if (data.Id == item.OutputAttchId)
-                                                        {
-                                                            <option value="@data.Id" selected>@data.Nama</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@data.Id">@data.Nama</option>
-                                                        }
-                                                    }
-                                                </select>
-                                            </div>
-                                            <label class="col-sm-1 control-label text-right">File</label>
-                                            <div class="col-sm-3" id="divFile@(no)">
-                                                @if (item.OutputAttchId == 2 || item.OutputAttchId == 4)
-                                                {
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" id="FileOld@(no)" value="@item.Path" disabled readonly>
-                                                        <span class="input-group-btn">
-                                                            <a href="@Url.Content("~/Files/Attachment/")@item.Path" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a>
-                                                            <button class="btn btn-danger btn-flat" onclick="DeleteAttch(@no, '@item.Path')"><i class="fa fa-remove"></i></button>
-                                                        </span>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <input type="file" class="form-control" id="File@(no)" path="@item.Path" placeholder="File Lampiran">
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 { no++; }
                             }
@@ -236,6 +236,23 @@
                         else
                         {
                             <div class="GLampiran" id="GLampiran0" count="0">
+                                <div class="form-group col-md-12">
+                                    <div class="col-sm-offset-1 col-sm-10">
+                                        <label class="col-sm-1 control-label text-right">Output</label>
+                                        <div class="col-sm-3" id="divOutputAttch0">
+                                            <select required="required" class="form-control select2" id="OutputAttch0" onchange="OutputAttch(0)" style="width: 100%;">
+                                                @foreach (var data in Model.OutputAttch)
+                                                {
+                                                    <option value="@data.Id">@data.Nama</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-1 control-label text-right">File</label>
+                                        <div class="col-sm-3" id="divFile0">
+                                            <input type="file" class="form-control" id="File0" path="" placeholder="File Lampiran">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group col-md-12">
                                     <label class="col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
                                     <div class="col-sm-10">
@@ -275,28 +292,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-12">
-                                    <div class="col-sm-offset-1 col-sm-10">
-                                        <label class="col-sm-1 control-label text-right">Output</label>
-                                        <div class="col-sm-3" id="divOutputAttch0">
-                                            <select required="required" class="form-control select2" id="OutputAttch0" onchange="OutputAttch(0)" style="width: 100%;">
-                                                @foreach (var data in Model.OutputAttch)
-                                                {
-                                                    <option value="@data.Id">@data.Nama</option>
-                                                }
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-1 control-label text-right">File</label>
-                                        <div class="col-sm-3" id="divFile0">
-                                            <input type="file" class="form-control" id="File0" path="" placeholder="File Lampiran">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         }
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-sm-10">
                             <div class="pull-right">
                                 <a href="@Url.Action("Index", "Inputs")" class="btn btn-default">Cancel</a>
                                 <button type="submit" name="submit" class="btn btn-primary" onclick="Submit()">Next</button>
@@ -433,14 +433,14 @@
             html += '<div class="col-sm-3" id="divNomor' + count + '"><input type="text" class="form-control" id="Nomor' + count + '" placeholder="Nomor Lampiran"></div>';
             html += '</div>';
             html += '</div>';
-            html += '<div class="form-group col-md-12">';
-            html += '<div class="col-sm-offset-1 col-sm-10">';
-            html += '<label class="col-sm-1 control-label text-right">Output</label>';
-            html += '<div class="col-sm-3" id="divOutputAttch' + count + '">';
-            html += '<select required="required" class="form-control select2" id="OutputAttch' + count + '" onchange="OutputAttch(' + count + ')" style="width: 100%;"></select>';
-            html += '</div>';
-            html += '<label class="col-sm-1 control-label text-right">File</label>';
-            html += '<div class="col-sm-3" id="divFile' + count + '"><input type="file" class="form-control" id="File' + count + '" path="" placeholder="File Lampiran"></div>';
+            //html += '<div class="form-group col-md-12">';
+            //html += '<div class="col-sm-offset-1 col-sm-10">';
+            //html += '<label class="col-sm-1 control-label text-right">Output</label>';
+            //html += '<div class="col-sm-3" id="divOutputAttch' + count + '">';
+            //html += '<select required="required" class="form-control select2" id="OutputAttch' + count + '" onchange="OutputAttch(' + count + ')" style="width: 100%;"></select>';
+            //html += '</div>';
+            //html += '<label class="col-sm-1 control-label text-right">File</label>';
+            //html += '<div class="col-sm-3" id="divFile' + count + '"><input type="file" class="form-control" id="File' + count + '" path="" placeholder="File Lampiran"></div>';
             html += '</div>';
             html += '</div>';
             html += '</div>';
@@ -498,8 +498,8 @@
         }
 
         
-
-        function Submit() {
+        
+        function Submit() {            
             ClearError();
             
             var eror = false;

@@ -106,6 +106,7 @@ namespace Apv.Controllers.Transaksi
             JsonResult.MaxJsonLength = int.MaxValue;
             return JsonResult;
         }
+
         public ActionResult View(int Id)
         {
             AddVM result = new AddVM();
@@ -116,6 +117,7 @@ namespace Apv.Controllers.Transaksi
 
             return View(result);
         }
+
         public ActionResult Verified(int Id)
         {
             TransSlipsVM result = new TransSlipsVM();
@@ -124,6 +126,7 @@ namespace Apv.Controllers.Transaksi
 
             return View(result);
         }
+
         public JsonResult GetById(int Id)
         {
             TransVM result = new TransVM();
@@ -148,6 +151,7 @@ namespace Apv.Controllers.Transaksi
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult Approve(int Id, List<TransMainDetail> TransMainDetail)
         {
             bool result = false;
@@ -447,6 +451,7 @@ namespace Apv.Controllers.Transaksi
 
             return Json(new { result = result }, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult Reject(List<int> Ids, string Keterangan)
         {
             bool result = false;
@@ -544,6 +549,7 @@ namespace Apv.Controllers.Transaksi
 
             return Json(new { title = title, text = text, type = type }, JsonRequestBehavior.AllowGet);
         }
+
         public void MemoPDF(int Id, string Path)
         {
             var User = GetUser();
@@ -1975,7 +1981,6 @@ namespace Apv.Controllers.Transaksi
             #endregion
         }
 
-
         public ActionResult ListSlip(int Id)
         {
             TransSlipsVM result = new TransSlipsVM();
@@ -1984,12 +1989,14 @@ namespace Apv.Controllers.Transaksi
 
             return View(result);
         }
+
         public ActionResult Add(int Id)
         {
             InputSlipVM result = GetMaster();
             result.Id = Id;
             return View(result);
         }
+
         public ActionResult Edit(int Id)
         {
             InputSlipVM result = GetMaster();
@@ -1999,6 +2006,7 @@ namespace Apv.Controllers.Transaksi
             result.SettingSlip = _context.SettingSlip.Include(x => x.JenisSlip).Include(x => x.OutputSlip).FirstOrDefault(x => x.OutputSlipId == slip.OutputSlipId && x.JenisSlipId == slip.JenisSlipId);
             return View(result);
         }
+
         public InputSlipVM GetMaster()
         {
             InputSlipVM result = new InputSlipVM();
@@ -2008,6 +2016,7 @@ namespace Apv.Controllers.Transaksi
             result.SettingSlips = _context.SettingSlip.Include(x => x.JenisSlip).Where(x => x.OutputSlipId == 1).OrderBy(x => x.JenisSlipId).ToList();
             return result;
         }
+
         public JsonResult GetListSlip(int Id)
         {
             var User = GetUser();
@@ -2018,12 +2027,14 @@ namespace Apv.Controllers.Transaksi
             JsonResult.MaxJsonLength = int.MaxValue;
             return JsonResult;
         }
+
         public JsonResult GetSlipById(int Id)
         {
             var result = _context.TransSlip.Include(x => x.JenisSlip).Include(x => x.JenisRekeningDebit).Include(x => x.JenisRekeningKredit).Include(x => x.BankKredit).Include(x => x.CurrencyDebit).Include(x => x.CurrencyKredit).SingleOrDefault(x => x.Id == Id);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult SaveSlip(TransSlip Slip, int TransId)
         {
             var result = false;
@@ -2118,6 +2129,7 @@ namespace Apv.Controllers.Transaksi
             //context.Clients.User(User.Id).SendNotif(User.Id, 1);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public JsonResult DeleteSlip(List<int> Ids)
         {
             bool result = false;
@@ -2134,6 +2146,7 @@ namespace Apv.Controllers.Transaksi
             //context.Clients.User(User.Id).SendNotif(User.Id, 1); //call CreateSlip
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        
         public JsonResult SendingSlip(int Id, bool IsUrgent)
         {
             bool result = false;

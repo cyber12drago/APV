@@ -57,9 +57,9 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label class="col-sm-2 control-label text-right">Uraian</label>
+                            <label class="col-sm-2 control-label text-right">Jenis Pekerjaan</label>
                             <div class="col-sm-10" id="divUraian">
-                                <textarea class="form-control" rows="2" id="Uraian" readonly disabled placeholder="Uraian"></textarea>
+                                <textarea class="form-control" rows="2" id="Uraian" readonly disabled placeholder="Jenis Pekerjaan"></textarea>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -281,36 +281,6 @@
                         </div>
                         <div class="GLampiran" id="GLampiran0" count="0">
                             <div class="form-group col-md-12">
-                                <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
-                                <div class="col-sm-10">
-                                    <label class="col-sm-1 control-label text-right">Jenis</label>
-                                    <div class="col-sm-11" id="divSubJenisAttch0">
-                                        <input type="text" class="form-control" id="SubJenisAttch0" readonly disabled placeholder="Jenis Attachment">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <label class="col-sm-1 control-label text-right">Tanggal</label>
-                                    <div class="col-sm-3" id="divTanggal0">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                            <input type="text" class="form-control Tanggal" readonly disabled id="Tanggal0" autocomplete="off">
-                                        </div>
-                                    </div>
-                                    <label class="col-sm-1 control-label text-right">Jumlah</label>
-                                    <div class="col-sm-3" id="divJumlah0">
-                                        <input type="text" class="form-control text-right" readonly disabled oninput="this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" id="Jumlah0" placeholder="Jumlah Lembar">
-                                    </div>
-                                    <label class="col-sm-1 control-label text-right">Nomor</label>
-                                    <div class="col-sm-3" id="divNomor0">
-                                        <input type="text" class="form-control" id="Nomor0" readonly disabled placeholder="Nomor Lampiran">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-12">
                                 <div class="col-sm-offset-2 col-sm-10">
                                     <label class="col-sm-1 control-label text-right">Output</label>
                                     <div class="col-sm-3" id="divOutputAttch0">
@@ -360,6 +330,36 @@
                                         <span class="input-group-addon" id="NomorPPSpan">
                                         </span>
                                         <input type="text" class="form-control" id="NomorPP" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
+                                <div class="col-sm-10">
+                                    <label class="col-sm-1 control-label text-right">Jenis</label>
+                                    <div class="col-sm-11" id="divSubJenisAttch0">
+                                        <input type="text" class="form-control" id="SubJenisAttch0" readonly disabled placeholder="Jenis Attachment">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <label class="col-sm-1 control-label text-right">Tanggal</label>
+                                    <div class="col-sm-3" id="divTanggal0">
+                                        <div class="input-group">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control Tanggal" readonly disabled id="Tanggal0" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <label class="col-sm-1 control-label text-right">Jumlah</label>
+                                    <div class="col-sm-3" id="divJumlah0">
+                                        <input type="text" class="form-control text-right" readonly disabled oninput="this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" id="Jumlah0" placeholder="Jumlah Lembar">
+                                    </div>
+                                    <label class="col-sm-1 control-label text-right">Nomor</label>
+                                    <div class="col-sm-3" id="divNomor0">
+                                        <input type="text" class="form-control" id="Nomor0" readonly disabled placeholder="Nomor Lampiran">
                                     </div>
                                 </div>
                             </div>
@@ -672,6 +672,9 @@
             var JumlahPembayaran = 0;
             var Debit = 0;
             var Kredit = 0;
+            var pengadaan = $('#NilaiPengadaan').val();
+            pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+
             $('.Pengadaan').each(function (i, value) {
                 var nilai = $(this).val();
                 if (isNaN(minkoma(nilai)) || nilai == "") {
@@ -713,6 +716,14 @@
                 Denda = 0;
             }
 
+            if (parseInt(pengadaan) >= 10000000) {
+
+                $('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
+
+            } else {
+                TotPPN = 0;
+                $('#PPNPembayaran').val(0);
+            }
             JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
 
             $('#NilaiPengadaan').val(decimal(TotPengadaan));
@@ -972,15 +983,15 @@
             html += '<div class="col-sm-3" id="divNomor' + i + '"><input type="text" class="form-control input-sm" id="Nomor' + i + '" readonly disabled placeholder="Nomor Lampiran"></div>';
             html += '</div>';
             html += '</div>';
-            html += '<div class="form-group col-md-12">';
-            html += '<div class="col-sm-offset-2 col-sm-10">';
-            html += '<label class="col-sm-1 control-label text-right">Output</label>';
-            html += '<div class="col-sm-3" id="divOutputAttch' + i + '"><input type="text" class="form-control input-sm" id="OutputAttch' + i + '" readonly disabled placeholder="Output Attachment"></div>';
-            html += '<label class="col-sm-1 control-label text-right" id="labelFile' + i + '">File</label>';
-            html += '<div class="col-sm-3" id="divFile' + i + '"><div class="input-group input-group-sm"><input type="text" class="form-control input-sm" id="File' + i + '" readonly disabled path="" placeholder="File Lampiran">';
-            html += '<span class="input-group-btn"><a href="#" id="URLFile' + i + '" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a></span>';
-            html += '</div>';
-            html += '</div>';
+            //html += '<div class="form-group col-md-12">';
+            //html += '<div class="col-sm-offset-2 col-sm-10">';
+            //html += '<label class="col-sm-1 control-label text-right">Output</label>';
+            //html += '<div class="col-sm-3" id="divOutputAttch' + i + '"><input type="text" class="form-control input-sm" id="OutputAttch' + i + '" readonly disabled placeholder="Output Attachment"></div>';
+            //html += '<label class="col-sm-1 control-label text-right" id="labelFile' + i + '">File</label>';
+            //html += '<div class="col-sm-3" id="divFile' + i + '"><div class="input-group input-group-sm"><input type="text" class="form-control input-sm" id="File' + i + '" readonly disabled path="" placeholder="File Lampiran">';
+            //html += '<span class="input-group-btn"><a href="#" id="URLFile' + i + '" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a></span>';
+            //html += '</div>';
+            //html += '</div>';
             html += '</div>';
             html += '</div>';
             html += '</div>';

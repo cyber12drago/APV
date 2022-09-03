@@ -454,17 +454,17 @@ C:\Users\M Naufal\Documents\Kerja\Apv\APV\Apv\obj\Debug\Apv.Migrations.falseTran
 C:\Users\M Naufal\Documents\Kerja\Apv\APV\Apv\obj\Debug\Apv.csproj.GenerateResource.Cache
 C:\Users\M Naufal\Documents\Kerja\Apv\APV\Apv\obj\Debug\Apv.dll
 C:\Users\M Naufal\Documents\Kerja\Apv\APV\Apv\obj\Debug\Apv.pdb
-C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\csc.exe
-C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\System.Reflection.Metadata.dll
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\VBCSCompiler.exe
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\csc.exe
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\Microsoft.CSharp.Core.targets
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\Microsoft.VisualBasic.Core.targets
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\System.Collections.Immutable.dll
-C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\System.Reflection.Metadata.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\vbc.exe
-C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\VBCSCompiler.exe
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\roslyn\VBCSCompiler.exe.config
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Apv.dll.config
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Apv.dll
@@ -550,7 +550,6 @@ C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.Owin.Security.OAuth.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.Owin.Security.Google.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.Owin.Security.Twitter.xml
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.csprojResolveAssemblyReference.cache
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.InitialMigration.resources
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.addTransAndMaster.resources
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.editNamaMain.resources
@@ -583,3 +582,4 @@ C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.Migrations.CurrentUser.resources
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.csproj.GenerateResource.Cache
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.dll
 C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.pdb
+C:\KERJAAN\BNI\Apv\Apv2\APV\Apv\obj\Debug\Apv.csprojResolveAssemblyReference.cache

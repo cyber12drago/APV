@@ -367,6 +367,23 @@
                         </div>
                         <div class="GLampiran" id="GLampiran0" count="0">
                             <div class="form-group col-md-12">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <label class="col-sm-1 control-label text-right">Output</label>
+                                    <div class="col-sm-3" id="divOutputAttch0">
+                                        <input type="text" class="form-control" id="OutputAttch0" readonly disabled placeholder="Output Attachment">
+                                    </div>
+                                    <label class="col-sm-1 control-label text-right" id="labelFile0">File</label>
+                                    <div class="col-sm-3" id="divFile0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="File0" readonly disabled placeholder="File Lampiran">
+                                            <span class="input-group-btn">
+                                                <a href="" class="btn btn-info btn-flat" id="URLFile0" target="_blank"><i class="fa fa-download"></i></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
                                 <label class="col-sm-offset-1 col-sm-1 control-label text-right"><i class="fa fa-square"></i></label>
                                 <div class="col-sm-10">
                                     <label class="col-sm-1 control-label text-right">Jenis</label>
@@ -401,23 +418,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <label class="col-sm-1 control-label text-right">Output</label>
-                                    <div class="col-sm-3" id="divOutputAttch0">
-                                        <input type="text" class="form-control" id="OutputAttch0" readonly disabled placeholder="Output Attachment">
-                                    </div>
-                                    <label class="col-sm-1 control-label text-right" id="labelFile0">File</label>
-                                    <div class="col-sm-3" id="divFile0">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="File0" readonly disabled placeholder="File Lampiran">
-                                            <span class="input-group-btn">
-                                                <a href="" class="btn btn-info btn-flat" id="URLFile0" target="_blank"><i class="fa fa-download"></i></a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -1199,8 +1200,7 @@
             var JumlahPembayaran = 0;
             var Debit = 0;
             var Kredit = 0;
-            var pengadaan = $('#NilaiPengadaan').val();
-            pengadaan = parseInt(pengadaan.replaceAll(",", ""));
+            
 
             $('.Pengadaan').each(function (i, value) {
                 var nilai = $(this).val();
@@ -1243,7 +1243,8 @@
                 Denda = 0;
             }
 
-            if (parseInt(pengadaan) >= 10000000) {
+            $('#PajakPertambahan').val(decimal(TotPPN));
+            if (parseInt(TotPengadaan) >= 10000000) {
 
                 $('#PPNPembayaran').val(decimal(Math.round(TotPPN)));
 
@@ -1254,7 +1255,7 @@
             JumlahPembayaran = TotPengadaanPPH - TotPPN - parseFloat(Denda);
 
             $('#NilaiPengadaan').val(decimal(TotPengadaan));
-            $('#PajakPertambahan').val(decimal(TotPPN));
+            
             $('#InclusivePPN').val(decimal(TotPengadaanPPN));
             //$('#InclusivePPNMaterai').val(decimal(TotPengadaanPPNMat));
             $('#PajakPenghasilan').val(decimal(TotPPH));
@@ -1545,15 +1546,15 @@
             html += '<div class="col-sm-3" id="divNomor' + i + '"><input type="text" class="form-control input-sm" id="Nomor' + i + '" readonly disabled placeholder="Nomor Lampiran"></div>';
             html += '</div>';
             html += '</div>';
-            html += '<div class="form-group col-md-12">';
-            html += '<div class="col-sm-offset-2 col-sm-10">';
-            html += '<label class="col-sm-1 control-label text-right">Output</label>';
-            html += '<div class="col-sm-3" id="divOutputAttch' + i + '"><input type="text" class="form-control input-sm" id="OutputAttch' + i + '" readonly disabled placeholder="Output Attachment"></div>';
-            html += '<label class="col-sm-1 control-label text-right" id="labelFile' + i + '">File</label>';
-            html += '<div class="col-sm-3" id="divFile' + i + '"><div class="input-group input-group-sm"><input type="text" class="form-control input-sm" id="File' + i + '" readonly disabled path="" placeholder="File Lampiran">';
-            html += '<span class="input-group-btn"><a href="#" id="URLFile' + i + '" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a></span>';
-            html += '</div>';
-            html += '</div>';
+            //html += '<div class="form-group col-md-12">';
+            //html += '<div class="col-sm-offset-2 col-sm-10">';
+            //html += '<label class="col-sm-1 control-label text-right">Output</label>';
+            //html += '<div class="col-sm-3" id="divOutputAttch' + i + '"><input type="text" class="form-control input-sm" id="OutputAttch' + i + '" readonly disabled placeholder="Output Attachment"></div>';
+            //html += '<label class="col-sm-1 control-label text-right" id="labelFile' + i + '">File</label>';
+            //html += '<div class="col-sm-3" id="divFile' + i + '"><div class="input-group input-group-sm"><input type="text" class="form-control input-sm" id="File' + i + '" readonly disabled path="" placeholder="File Lampiran">';
+            //html += '<span class="input-group-btn"><a href="#" id="URLFile' + i + '" class="btn btn-info btn-flat" target="_blank"><i class="fa fa-download"></i></a></span>';
+            //html += '</div>';
+            //html += '</div>';
             html += '</div>';
             html += '</div>';
             html += '</div>';

@@ -65,14 +65,14 @@
                                     }
                                 </select>
                             </div>
-                            <label for="total" class="col-sm-2 control-label text-right">Nomor</label>
+                            <label for="total" class="col-sm-2 control-label text-right">Nomor</label>&midast;
                             <div class="col-sm-4" id="divAddKNomor">
                                 <input type="text" class="form-control" id="AddKNomor" placeholder="Nomor">
                             </div>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="total" class="col-sm-2 control-label text-right">Tanggal</label>
-                            <div class="col-sm-4" id="divAddKDocDate">
+                            <div class="col-sm-4" id="divAddKDocDate">&midast;
                                 <div class="input-group">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
@@ -82,14 +82,14 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="total" class="col-sm-2 control-label text-right">Uraian</label>
+                            <label for="total" class="col-sm-2 control-label text-right">Uraian</label>&midast;
                             <div class="col-sm-10" id="divAddKUraian">
                                 <textarea class="form-control" rows="3" id="AddKUraian" placeholder="Uraian"></textarea>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
                             <label for="total" class="col-sm-2 control-label text-right">Nominal</label>
-                            <div class="col-sm-4" id="divAddKNominal">
+                            <div class="col-sm-4" id="divAddKNominal">&midast;
                                 <input type="text" class="form-control text-right" id="AddKNominal" oninput="this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" placeholder="Nominal">
                             </div>
                             <label for="total" class="col-sm-2 control-label text-right">Jumlah Termin</label>
@@ -222,7 +222,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="total" class="col-sm-2 control-label text-right">Nominal</label>
+                            <label for="total" class="col-sm-2 control-label text-right">Nominal</label>&midast;
                             <div class="col-sm-4" id="divAddANominal">
                                 <input type="text" class="form-control text-right" id="AddANominal" oninput="this.value = decimal(this.value.replace(/[^0-9.]/g, '').replace(/\.(?=.*\.)/g, ''));" placeholder="Nominal">
                             </div>
@@ -244,7 +244,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <label for="total" class="col-sm-2 control-label text-right">Files</label>
+                            <label for="total" class="col-sm-2 control-label text-right">Files</label>&midast;
                             <div class="col-sm-4" id="divAddAFile">
                                 <input type="file" class="form-control" accept="application/pdf" id="AddAFile" style="min-width:100%">
                             </div>
@@ -591,7 +591,7 @@
 
             if ($.trim($("#AddKFile").val()) == "") { $("#divAddKFile").addClass("has-error"); error = true; }
             if ($.trim($("#AddKNominal").val()) == "" || minkoma($("#AddKNominal").val()) == 0) { $("#divAddKNominal").addClass("has-error"); error = true; }
-            if ($.trim($("#AddKTermin").val()) == "") { $("#divAddKTermin").addClass("has-error"); error = true; }
+            //if ($.trim($("#AddKTermin").val()) == "") { $("#divAddKTermin").addClass("has-error"); error = true; }
             if ($.trim($("#AddKNomorRekening").val()) == "") { $("#divAddKNomorRekening").addClass("has-error"); error = true; }
             if ($.trim($("#AddKNamaRekening").val()) == "") { $("#divAddKNamaRekening").addClass("has-error"); error = true; }
             if ($.trim($("#AddKBank").val()) == "") { $("#divAddKBank").addClass("has-error"); error = true; }

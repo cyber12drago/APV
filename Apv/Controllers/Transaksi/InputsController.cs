@@ -767,8 +767,8 @@ namespace Apv.Controllers.Transaksi
                     {
                         var ext = Path.GetExtension(File.FileName);
                         pathfile = Trans.Id + "-" + DateTime.Now.ToString("ddMMyyyy", new System.Globalization.CultureInfo("id-ID")) + " - " + string.Format(@"{0}", DateTime.Now.Ticks) + ext;
-                        //string path = Server.MapPath("~/Files/Attachment/" + pathfile);
-                        string path = ("C:/KERJAAN/BNI/EVA2/Eva/Files/Attch/" + pathfile);
+                        string path = Server.MapPath("~/Files/Attachment/" + pathfile);
+                        //string path = ("C:/KERJAAN/BNI/EVA2/Eva/Files/Attch/" + pathfile);
                         File.SaveAs(path);
                     }
 
@@ -784,7 +784,14 @@ namespace Apv.Controllers.Transaksi
                     TransAttachment.Jumlah = item.Jumlah;
                     TransAttachment.Nomor = item.Nomor;
                     TransAttachment.SubJenisAttchId = item.SubJenisAttchId;
+                    if (item.OutputAttchId != 0)
+                    {
                     TransAttachment.OutputAttchId = item.OutputAttchId;
+                    }
+                    else
+                    {
+                        TransAttachment.OutputAttchId = 1;
+                    }
                     TransAttachment.TransId = Trans.Id;
 
                     if (item.Id == 0)
