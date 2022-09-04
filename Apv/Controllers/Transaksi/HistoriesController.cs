@@ -98,9 +98,31 @@ namespace Apv.Controllers.Transaksi
             //{
             //    if(PPH)
             //}
-            var PPH23 = TransPotonganPPH.Select(x => x.Total).FirstOrDefault().ToString();
-            var PPH22 = _context.TransPotongan.Include(x => x.Trans).Where(x => x.SubJenisPotonganId == 4 && x.TransId == Id).Select(x => x.Total).FirstOrDefault();
-            var PPH42 = TransPotonganPPH.Select(x => x.Total).FirstOrDefault().ToString();
+            var PPH22 = "";
+            var PPH23 = "";
+            var PPH42 = "";
+            var PPH = _context.TransRekening.Include(x => x.Trans).Where(x => x.TransId == Id && x.IsDebit == false).ToList();
+            for (int i = 0; i <= PPH.Count() - 1; i++)
+            {
+                if (PPH[i].Nama.ToLower().Split()[0] == "pph")
+                {
+                    if (PPH[i].Nama.ToLower().Contains("pph pasal 22"))
+                    {
+                        PPH22 = PPH[i].Nominal.ToString();
+                    }
+                    else if (PPH[i].Nama.ToLower().Contains("pph pasal 23"))
+                    {
+                        PPH23 = PPH[i].Nominal.ToString();
+                    }
+                    else if (PPH[i].Nama.ToLower().Contains("pph pasal 42"))
+                    {
+                        PPH42 = PPH[i].Nominal.ToString();
+                    }
+                }
+            }
+            //var PPH23 = ;
+            //var PPH22 = _context.TransPotongan.Include(x => x.Trans).Where(x => x.SubJenisPotonganId == 4 && x.TransId == Id).Select(x => x.Total).FirstOrDefault();
+            //var PPH42 = TransPotonganPPH.Select(x => x.Total).FirstOrDefault().ToString();
             var sisaPlafond = (data.MainDetail.TotalNominal - gettotal).ToString();
             var nilaiTagihan = data.Trans.TotalNominal;
             var sisa = ((data.MainDetail.TotalNominal - gettotal) - nilaiTagihan);
@@ -146,7 +168,7 @@ namespace Apv.Controllers.Transaksi
             }
 
             docs.Replace("%PPH23%", PPH23, false, true);
-            docs.Replace("%PPH22%", PPH22.ToString(), false, true);
+            docs.Replace("%PPH22%", PPH22, false, true);
             docs.Replace("%PPH42%", PPH42, false, true);
             docs.Replace("%NOCN%", NOCN, false, true);
             docs.Replace("%NOREG%", NOREG, false, true);
@@ -1821,7 +1843,7 @@ namespace Apv.Controllers.Transaksi
                     var output = "";
                     if (item.OutputAttchId != 1)
                     {
-                        output = "X";
+                        output = "";
                     }
 
                     cell = new PdfPCell();

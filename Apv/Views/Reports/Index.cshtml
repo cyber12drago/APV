@@ -20,6 +20,7 @@
                             <option selected="selected" value="">-- Pilih Jenis Report --</option>
                             <option value="1">Rekap PPN</option>
                             <option value="2">Rekap PPH</option>
+                            <option value="3">Laporan Transaksi Harian</option>
                         </select>
                     </div>
                 </div>
@@ -33,19 +34,256 @@
         </div>
         <div class="box-footer with-border">
             <div class="pull-right">
-                <a id="Download" readonly disabled class="btn btn-primary">Download</a>
+                <a id="Preview" class="btn btn-primary" onclick="preview()"><i class="fa fa-eye"></i><span>Preview</span></a>
+                <a id="Download" readonly disable class="btn btn-primary">Download</a>
+            </div>
+        </div>
+    </div>
+    <div class="box box-default">
+        <div class="box-body">
+            <div id="tableall " class="table-responsive">
+                <table id="table" class="table table-bordered table-striped">
+                    <thead style="background-color:#5e5ba5; color:white; table-layout:auto; width:100%">
+                        <tr style="font-size:12px; table-layout:auto; width:100%">
+                            <th>No</th>
+                            <th>Nomor Memo</th>
+                            <th>Tanggal Terima/Proses</th>
+                            <th>No Register PYN</th>
+                            <th>Tanggal Memo</th>
+                            <th>Nama Rekanan</th>
+                            <th>No Rek</th>
+                            <th>Jenis Pekerjaan</th>
+                            <th>No & Tgl Kontrak</th>
+                        </tr>
+                    </thead>
+                </table>
+                <table id="table1" class="table table-bordered table-striped">
+                    <thead style="background-color:#5e5ba5; color:white; table-layout:auto; width:100%">
+                        <tr style="font-size:12px; table-layout:auto; width:100%">
+                            <th>No</th>
+                            <th>Nomor Memo</th>
+                            <th>Tanggal Memo</th>
+                            <th>NPWP</th>
+                            <th>Nama Rekanan</th>
+                            <th>No Faktur</th>
+                            <th>Tanggal Faktur</th>
+                            <th>Tarif</th>
+                            <th>PPN</th>
+                            <th>DPP</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                </table>
+                <table id="table2" class="table table-bordered table-striped">
+                    <thead style="background-color:#5e5ba5; color:white; table-layout:auto; width:100%">
+                        <tr style="font-size:12px; table-layout:auto; width:100%">
+                            <th>No</th>
+                            <th>Nomor Memo</th>
+                            <th>Tanggal Memo</th>
+                            <th>NPWP</th>
+                            <th>Nama Rekanan</th>
+                            <th>Tarif</th>
+                            <th>PPH</th>
+                            <th>DPP</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
     </div>
 </section>
 @section Scripts{
     <script>
+        //debugger;
         $(document).ready(function () {
+            debugger;
+            $('.select2').select2();
             $('.tanggalrange').daterangepicker();
-        })
+            $("#table2").hide();
+            $("#table1").hide();
+            $("#table").hide();
 
+        });
+
+        function preview() {
+            $("#table").DataTable().clear().destroy();
+            $("#table1").DataTable().clear().destroy();
+            $("#table2").DataTable().clear().destroy();
+            var Jenis = $("#JenisReport").val();
+            var time;
+            if (Jenis == 1) {
+                var i = 1;
+                var daterange = $("#tanggal").val();
+                var start = daterange.substring(0, 10);
+                var end = daterange.substring(13, 24);
+
+                $('#table').hide();
+                $('#table2').hide();
+                $('#table1').show();
+                $("#table1").DataTable({
+                    "ajax": {
+                        "url": "@Url.Action("GetList_1","Reports")",
+                        "type": "GET",
+                        "data": { StartDate: start, EndDate: end },
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        {
+                            "render": function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + i;
+                            }
+                        },
+                        {
+                            "data": "nomor"
+                        },
+                        {
+                            "render": function (data, type, val) {
+                                return moment(val.docDate).locale('Id').format('LL');
+                            }
+                        },
+                        {
+                            "data": "mainDetail1[0].NPWP"
+                        },
+                        {
+                            "data": "mainDetail1[0].NamaM"
+                        },
+                        {
+                            "data": "attachs[0].noFak"
+                        },
+                        {
+                            "data": "attachs[0].docDateA"
+                        },
+                        {
+                            "data": "subjenis"
+                        },
+                        {
+                            "render": function (data, type, val) {
+                                var total = parseInt(val.Tot);
+                                return total;
+                            }
+                            //"data":"Tot"
+                        },
+                        {
+                            "data": "Nom"
+                        },
+                        {
+                            "data": "ket"
+                        },
+                    ]
+                });
+            } else if (Jenis == 3) {
+                var i = 1;
+
+                var daterange = $("#tanggal").val();
+                var start = daterange.substring(0, 10);
+                var end = daterange.substring(13, 24);
+
+                $("#table1").hide();
+                $("#table2").hide();
+                $("#table").show();
+                $("#table").DataTable({
+                    //processing: true,
+                    "ajax": {
+                        "url": "@Url.Action("GetList","Reports")",
+                        "type": "GET",
+                        "data": { StartDate: start, EndDate: end },
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        {
+                            "render": function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + i;
+                            }
+                        },
+                       {
+                           "data": "nomor"
+                       },
+                       {
+                           "render": function (data, type, val) {
+                               return moment(val.StartCreateDate).locale('Id').format('LL');
+                           }
+                       },
+                       {
+                           "data": "NoReg"
+                       },
+                       {
+                           "render": function (data, type, val) {
+                               return moment(val.docDate).locale('Id').format('LL');
+                           }
+                       },
+                       {
+                           "data": "NomorREK[0].namaRek"
+                       },
+                       {
+                           "data": "NomorREK[0].noRek"
+                       },
+                       {
+                           "data": "uraian"
+                       },
+                       {
+                           "data": "TransMainDetail[0].MainDetail[0].NomorK"
+                       }
+                    ]
+                });
+            } else if (Jenis == 2) {
+                var i = 1;
+                var daterange = $("#tanggal").val();
+                var start = daterange.substring(0, 10);
+                var end = daterange.substring(13, 24);
+
+                $('#table').hide();
+                $('#table1').hide();
+                $('#table2').show();
+                $("#table2").DataTable({
+                    "ajax": {
+                        "url": "@Url.Action("GetList_2","Reports")",
+                        "type": "GET",
+                        "data":{StartDate: start, EndDate:end},
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        {
+                            "render": function (data, type, row, meta) {
+                                return meta.row + meta.settings._iDisplayStart + i;
+                            }
+                        },
+                        {
+                            "data": "nomor"
+                        },
+                        {
+                            "render": function (data, type, val) {
+                                return moment(val.docDate).locale('Id').format('LL');
+                            }
+                        },
+                        {
+                            "data": "mainDetail2[0].NPWP"
+                        },
+                        {
+                            "data": "mainDetail2[0].NamaM"
+                        },
+                        {
+                            "data": "subjenis"
+                        },
+                        {
+                            "render": function (data, type, val) {
+                                var total = parseInt(val.Tot);
+                                return total;
+                            }
+                            //"data":"Tot"
+                        },
+                        {
+                            "data": "Nom"
+                        },
+                        {
+                            "data": "ket"
+                        },
+                    ]
+                });
+            }
+        }
         function ClearError() {
-            $(".has-error").removeClass("has-error");
+            $('.has-error').removeClass("has-error");
         }
 
         function formatDate(dates) {
@@ -63,10 +301,9 @@
             var daterange = $("#tanggal").val();
 
             var start = daterange.substring(0, 10);
-            var end = daterange.substring(13, 24);
+            var end = daterange.substring(13.24);
 
             if (daterange != "") {
-                console.log('daas')
                 SetHref(Jenis, formatDate(start), formatDate(end));
             }
         }
@@ -77,25 +314,39 @@
 
             var start = daterange.substring(0, 10);
             var end = daterange.substring(13, 24);
-
-            console.log(Jenis)
             if (Jenis != null) {
-                console.log('daas2')
                 SetHref(Jenis, formatDate(start), formatDate(end));
             }
         }
 
         function SetHref(Jenis, StartDate, EndDate) {
             if (Jenis == 1) {
-                $('#Download').attr('href', '@Url.Action("RekapPPN", "Reports")?StartDate=' + StartDate + '&&EndDate=' + EndDate);
-                $('#Download').removeAttr('disabled');
+                $('#Download').attr('href', '@Url.Action("RekapPPN","Reports")?StartDate=' + StartDate + '&&EndDate=' + EndDate);
+                $('#Download').removeAttr('disable');
                 $('#Download').removeAttr('readonly');
             } else if (Jenis == 2) {
                 $('#Download').attr('href', '@Url.Action("RekapPPH", "Reports")?StartDate=' + StartDate + '&&EndDate=' + EndDate);
-                $('#Download').removeAttr('disabled');
+                $('#Donwload').removeAttr('disable');
                 $('#Download').removeAttr('readonly');
-            } 
+            } else if (Jenis == 3) {
+                $('#Download').attr('href', '@Url.Action("LaporanTransaksiHarian","Reports")?StartDate=' + StartDate + '&&EndDate=' + EndDate);
+                $('#Download').removeAttr('disable');
+                $('#Download').removeAttr('readonly');
+            }
+        }
+
+        function table1() {
+            var table = document.createElement('table');
+            var tr = document.createElement('tr');
+            var array = ['No', 'test1', 'test2'];
+
+            for (var j = 0; j < array.length; j++) {
+                var th = document.createElement('th');
+                var text = document.createElement(array[j]);
+                th.appendChild(text);
+                tr.appendChild(th);
+            }
+            table.appendChild(tr);
         }
     </script>
 }
-

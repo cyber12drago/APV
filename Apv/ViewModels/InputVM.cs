@@ -69,7 +69,7 @@ namespace Apv.ViewModels
     }
     public class TransViewVM
     {
-        public int Id { get; set; }        
+        public int Id { get; set; }
         public KodeSurat KodeSurat { get; set; }
         public string Nomor { get; set; }
         public string Uraian { get; set; }
@@ -94,7 +94,7 @@ namespace Apv.ViewModels
     }
     public class TransSlipsVM
     {
-        public Trans Trans { get; set; }        
+        public Trans Trans { get; set; }
         public IEnumerable<TransSlip> TransSlip { get; set; }
         public IEnumerable<SettingSlip> SettingSlip { get; set; }
     }
@@ -123,8 +123,83 @@ namespace Apv.ViewModels
         public bool OptionDocDate { get; set; }
         public int KodeSurat { get; set; }
         public string Nomor { get; set; }
-        public bool OptionNomor { get; set; }  
+        public bool OptionNomor { get; set; }
         public int Status { get; set; }
         public bool OptionStatus { get; set; }
+    }
+
+    public class LaporanHarianVM
+    {
+        public string nomor { get; set; }
+        public DateTime StartCreateDate { get; set; }
+        public DateTime docDate { get; set; }
+        public string NoReg { get; set; }
+        public IEnumerable<nomorREK> NomorREK { get; set; }
+        public string uraian { get; set; }
+        public IEnumerable<transMain> TransMainDetail { get; set; }
+    }
+
+    public class laporanPPN
+    {
+        public string nomor { get; set; }
+        public DateTime docDate { get; set; }
+        public int Nilai { get; set; }
+        public decimal Tot { get; set; }
+        public decimal Nom { get; set; }
+        public IEnumerable<maindetail1> mainDetail1 { get; set; }
+        public IEnumerable<attach> attachs { get; set; }
+        public string subjenis { get; set; }
+        public string ket { get; set; }
+        public DateTime docdateS { get; set; }
+    }
+    public class laporanPPH
+    {
+        public string nomor { get; set; }
+        public DateTime docDate { get; set; }
+        public string NPWP { get; set; }
+        public string Nama { get; set; }
+        public int Nilai { get; set; }
+        public decimal Tot { get; set; }
+        public decimal Nom { get; set; }
+        public string Uraian { get; set; }
+        public IEnumerable<maindetail2> mainDetail2 { get; set; }
+        public IEnumerable<attach1> attach1 { get; set; }
+        public string subjenis { get; set; }
+        public string ket { get; set; }
+    }
+
+    public class transMain
+    {
+        public IEnumerable<mainDetail> MainDetail { get; set; }
+    }
+    public class mainDetail
+    {
+        public string NomorK { get; set; }
+    }
+
+    public class nomorREK
+    {
+        public string noRek { get; set; }
+        public string namaRek { get; set; }
+    }
+    public class maindetail1
+    {
+        public string NamaM { get; set; }
+        public string NPWP { get; set; }
+    }
+    public class attach
+    {
+        public string noFak { get; set; }
+        public string docDateA { get; set; }
+    }
+    public class maindetail2
+    {
+        public string NamaM { get; set; }
+        public string NPWP { get; set; }
+    }
+    public class attach1
+    {
+        public string noFak { get; set; }
+        public DateTime docDateA { get; set; }
     }
 }

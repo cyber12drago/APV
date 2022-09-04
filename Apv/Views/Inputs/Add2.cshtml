@@ -296,7 +296,7 @@
                         }
                     </div>
                     <div class="row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <div class="pull-right">
                                 <a href="@Url.Action("Index", "Inputs")" class="btn btn-default">Cancel</a>
                                 <button type="submit" name="submit" class="btn btn-primary" onclick="Submit()">Next</button>
@@ -381,8 +381,8 @@
             var day = date.getDate().toString();
             day = day.length > 1 ? day : '0' + day;
             return day + '/' + month + '/' + year;
-        }
 
+        }
         function formatDatesRange(dates) {
             date = new Date(parseInt(dates.substr(6)));
             var year = date.getFullYear();

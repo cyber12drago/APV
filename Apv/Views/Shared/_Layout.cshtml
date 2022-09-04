@@ -58,7 +58,7 @@
                         @if (User.IsInRole("Modul Verificator"))
                         {
                             <li><a href="@Url.Action("Index", "Verifications")"><i class="fa fa-check"></i><span>Verification Payment</span></a></li>
-                            <li><a href="@Url.Action("Index", "Taxes")"><i class="fa fa-check-square-o"></i><span>Tax Payment</span></a></li>
+                            @*<li><a href="@Url.Action("Index", "Taxes")"><i class="fa fa-check-square-o"></i><span>Tax Payment</span></a></li>*@
                         }
                         @if (User.IsInRole("Modul Riwayat"))
                         {                            
